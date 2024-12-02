@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-import { checkPermission } from './permissionService'
 
 export default createStore({
   state: {
@@ -18,9 +17,6 @@ export default createStore({
   actions: {
     updateLibraryHandle ({ commit }, libraryHandle) {
       commit('setLibraryHandle', libraryHandle)
-    },
-    async checkLibraryPermission ({ state }) {
-      return await checkPermission(state.libraryHandle)
     }
   },
   modules: {

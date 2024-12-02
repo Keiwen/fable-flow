@@ -10,36 +10,36 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { usePermission } from '@/composables/usePermission'
 
 export default {
   name: 'LibratyPathSetup',
-  computed: {
-    ...mapGetters(['hasLibraryDefined', 'getLibraryDirectory'])
-  },
-  methods: {
-    ...mapActions(['updateLibraryHandle', 'checkLibraryPermission']),
-    // next method is async as we need to wait for user input
-    async selectPath () {
+  setup () {
+    const store = useStore()
+    const { checkPermission } = usePermission()
+
+    // computed
+    const getLibraryDirectory = computed(() => store.getters.getLibraryDirectory)
+
+    // methods
+    const selectPath = async () => {
       try {
         const handle = await window.showDirectoryPicker() // display directory picker for user
-        this.updateLibraryHandle(handle)
-        this.runLibraryPermissionCheck()
+        const hasPermission = await checkPermission(handle)
+        // if granted, update store
+        if (hasPermission) {
+          store.dispatch('updateLibraryHandle', handle)
+        }
       } catch (e) {
         console.error('Error on library path selection:', e)
       }
-    },
-    runLibraryPermissionCheck () {
-      if (!this.hasLibraryDefined) return
-      this.checkLibraryPermission()
-        .then(hasPermission => {
-          if (!hasPermission) {
-            console.error('No permission for library')
-          }
-        })
-        .catch(e => {
-          console.error('Error on permission check:', e)
-        })
+    }
+
+    return {
+      getLibraryDirectory,
+      selectPath
     }
   }
 }
