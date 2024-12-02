@@ -39,6 +39,7 @@ export default {
 
     onMounted(async () => {
       const libraryHandle = store.getters.getLibraryHandle
+      selectedAuthor.value = store.getters.getAuthorName
       await listAuthors(libraryHandle)
     })
 

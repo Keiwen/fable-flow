@@ -9,7 +9,7 @@ export default createStore({
     getLibraryHandle: (state) => state.libraryHandle,
     getLibraryDirectory: (state) => state.libraryHandle ? state.libraryHandle.name : '',
     getAuthorHandle: (state) => state.authorHandle,
-    getAuthorName: (state) => state.authorHandle ? state.authorHandle : ''
+    getAuthorName: (state) => state.authorHandle ? state.authorHandle.name : ''
   },
   mutations: {
     setLibraryHandle (state, libraryHandle) {
