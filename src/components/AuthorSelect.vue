@@ -31,6 +31,9 @@ export default {
     // watch
     watch(selectedAuthor, (newValue) => {
       const selectedHandler = authors.value.find(author => author.name === newValue)
+      if (selectedHandler) {
+        store.dispatch('updateAuthorHandle', selectedHandler)
+      }
       console.log('selection is', selectedHandler)
     })
 

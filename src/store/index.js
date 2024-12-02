@@ -21,6 +21,7 @@ export default createStore({
   },
   actions: {
     updateLibraryHandle ({ commit }, libraryHandle) {
+      commit('setAuthorHandle', null)
       commit('setLibraryHandle', libraryHandle)
     },
     updateAuthorHandle ({ commit }, authorHandle) {
