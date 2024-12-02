@@ -1,8 +1,8 @@
 <template>
   <nav>
-    <router-link to="/">Chapter</router-link> |
-    <router-link to="/book">Book</router-link> |
     <router-link to="/setup">Setup</router-link> |
+    <router-link to="/book">Book</router-link> |
+    <router-link to="/">Chapter</router-link> |
     <router-link to="/settings">Settings</router-link>
   </nav>
   <router-view/>
