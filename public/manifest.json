@@ -1,0 +1,22 @@
+{
+  "name": "FableFlow",
+  "short_name": "FableFlow",
+  "description": "A serene and inspiring audiobook experience.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#001d3d",
+  "theme_color": "#ffc107",
+  "icons": [
+    {
+      "src": "/img/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
