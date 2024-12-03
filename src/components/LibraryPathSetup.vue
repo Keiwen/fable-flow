@@ -1,3 +1,29 @@
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { useHandlePermission } from '@/composables/handlePermission'
+
+const store = useStore()
+const { hasPermission } = useHandlePermission()
+
+// computed
+const getLibraryDirectory = computed(() => store.getters.getLibraryDirectory)
+
+// methods
+const selectPath = async () => {
+  try {
+    const selectedHandle = await window.showDirectoryPicker() // display directory picker for user
+    const hasPermissionOnHandle = await hasPermission(selectedHandle)
+    // if granted, update store
+    if (hasPermissionOnHandle) {
+      store.dispatch('updateLibraryHandle', selectedHandle)
+    }
+  } catch (e) {
+    console.error('Error on library path selection:', e)
+  }
+}
+</script>
+
 <template>
   <div>
     <p>
@@ -8,42 +34,6 @@
     </p>
   </div>
 </template>
-
-<script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import { useHandlePermission } from '@/composables/useHandlePermission'
-
-export default {
-  name: 'LibratyPathSetup',
-  setup () {
-    const store = useStore()
-    const { hasPermission } = useHandlePermission()
-
-    // computed
-    const getLibraryDirectory = computed(() => store.getters.getLibraryDirectory)
-
-    // methods
-    const selectPath = async () => {
-      try {
-        const selectedHandle = await window.showDirectoryPicker() // display directory picker for user
-        const hasPermissionOnHandle = await hasPermission(selectedHandle)
-        // if granted, update store
-        if (hasPermissionOnHandle) {
-          store.dispatch('updateLibraryHandle', selectedHandle)
-        }
-      } catch (e) {
-        console.error('Error on library path selection:', e)
-      }
-    }
-
-    return {
-      getLibraryDirectory,
-      selectPath
-    }
-  }
-}
-</script>
 
 <style scoped lang="scss">
 
