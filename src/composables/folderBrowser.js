@@ -1,61 +1,101 @@
 import { ref } from 'vue'
+import { useStore } from 'vuex'
 
 export function useFolderBrowser () {
-  const authors = ref([])
-  const books = ref([])
+  const store = useStore()
+  const libraryHandle = store.getters.getLibraryHandle
+  let authorsLoaded = false
+  const authorHandles = ref([])
+  let isCheckingAuthors = false
+  let booksLoadedForAuthor = ''
+  const bookHandles = ref([])
+  let isCheckingBooks = false
 
-  const setAuthors = (authorList) => {
-    authors.value = authorList
-    return authorList
+  const checkAuthorsLoaded = async () => {
+    if (!authorsLoaded && !isCheckingAuthors) {
+      isCheckingAuthors = true
+      await listAuthors()
+    }
   }
 
-  const setBooks = (bookList) => {
-    books.value = bookList
-    return bookList
+  const getAuthorHandles = async () => {
+    await checkAuthorsLoaded()
+    return authorHandles.value
   }
 
-  const listAuthors = async (handle) => {
-    if (!handle) {
-      return setAuthors([])
+  const getAuthorHandle = async (author) => {
+    await checkAuthorsLoaded()
+    const item = authorHandles.value.find(handle => handle.name === author)
+    return item ? item.handle : null
+  }
+
+  const listAuthors = async () => {
+    authorHandles.value = []
+    authorsLoaded = false
+    if (!libraryHandle) {
+      isCheckingAuthors = false
+      return
     }
 
     try {
-      const authorList = []
-      for await (const [name, entry] of handle.entries()) {
+      for await (const [name, entry] of libraryHandle.entries()) {
         if (entry.kind === 'directory') {
-          authorList.push({ name, handle: entry })
+          authorHandles.value.push({ name, handle: entry })
         }
       }
-      return setAuthors(authorList)
+      authorsLoaded = true
     } catch (e) {
       console.error('Error on authors listing:', e)
-      return setAuthors([])
+    }
+    isCheckingAuthors = false
+  }
+
+  const checkBooksLoaded = async (forAuthor) => {
+    if (booksLoadedForAuthor !== forAuthor && !isCheckingBooks) {
+      isCheckingBooks = true
+      await listBooks(forAuthor)
     }
   }
 
-  const listBooks = async (handle) => {
-    if (!handle) {
-      return setBooks([])
+  const getBookHandles = async (forAuthor) => {
+    await checkBooksLoaded(forAuthor)
+    return bookHandles.value
+  }
+
+  const getBookHandle = async (forAuthor, book) => {
+    await checkBooksLoaded(forAuthor)
+    const item = bookHandles.value.find(handle => handle.name === book)
+    return item ? item.handle : null
+  }
+
+  const listBooks = async (forAuthor) => {
+    bookHandles.value = []
+    booksLoadedForAuthor = ''
+    const authorHandle = await getAuthorHandle(forAuthor)
+    if (!authorHandle) {
+      isCheckingBooks = false
+      return
     }
 
     try {
-      const bookList = []
-      for await (const [name, entry] of handle.entries()) {
+      for await (const [name, entry] of authorHandle.entries()) {
         if (entry.kind === 'directory') {
-          bookList.push({ name, handle: entry })
+          bookHandles.value.push({ name, handle: entry })
         }
       }
-      return setBooks(bookList)
+      booksLoadedForAuthor = forAuthor
     } catch (e) {
-      console.error('Error on books listing:', e)
-      return setBooks([])
+      console.error('Error on book listing:', e)
     }
+    isCheckingBooks = false
   }
 
   return {
-    authors,
-    listAuthors,
-    books,
-    listBooks
+    authorHandles,
+    getAuthorHandles,
+    getAuthorHandle,
+    bookHandles,
+    getBookHandles,
+    getBookHandle
   }
 }
