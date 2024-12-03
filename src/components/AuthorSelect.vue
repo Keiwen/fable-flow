@@ -14,12 +14,12 @@ const authorsHandles = ref([])
 watch(selectedAuthor, async (newValue) => {
   const selectedHandler = await getAuthorHandle(newValue)
   if (selectedHandler) {
-    store.dispatch('updateBrowseAuthor', newValue)
+    store.dispatch('updateCurrentAuthor', newValue)
   }
 })
 
 onMounted(async () => {
-  selectedAuthor.value = store.getters.getBrowseAuthor
+  selectedAuthor.value = store.getters.getCurrentAuthor
   authorsHandles.value = await getAuthorHandles()
 })
 </script>

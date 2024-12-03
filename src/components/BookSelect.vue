@@ -11,25 +11,25 @@ const selectedBook = ref('')
 const bookHandles = ref([])
 
 // computed
-const browseAuthor = computed(() => store.getters.getBrowseAuthor)
+const currentAuthor = computed(() => store.getters.getCurrentAuthor)
 
 // watch
-watch(browseAuthor, async (newValue) => {
+watch(currentAuthor, async (newValue) => {
   if (newValue === '') return
-  selectedBook.value = store.getters.getBrowseBook
+  selectedBook.value = store.getters.getCurrentBook
   bookHandles.value = await getBookHandles(newValue)
 })
 watch(selectedBook, async (newValue) => {
   if (newValue === '') return
-  const selectedHandler = await getBookHandle(browseAuthor.value, newValue)
+  const selectedHandler = await getBookHandle(currentAuthor.value, newValue)
   if (selectedHandler) {
-    store.dispatch('updateBrowseBook', newValue)
+    store.dispatch('updateCurrentBook', newValue)
   }
 })
 
 onMounted(async () => {
-  selectedBook.value = store.getters.getBrowseBook
-  bookHandles.value = await getBookHandles(browseAuthor.value)
+  selectedBook.value = store.getters.getCurrentBook
+  bookHandles.value = await getBookHandles(currentAuthor.value)
 })
 </script>
 

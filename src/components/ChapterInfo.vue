@@ -12,8 +12,8 @@ const audioPlayer = ref(null)
 const chapterSrc = ref(null)
 
 // computed
-const browseAuthor = computed(() => store.getters.getBrowseAuthor)
-const browseBook = computed(() => store.getters.getBrowseBook)
+const currentAuthor = computed(() => store.getters.getCurrentAuthor)
+const currentBook = computed(() => store.getters.getCurrentBook)
 const chapterCount = computed(() => chapterHandles.value.length)
 const firstChapter = computed(() => {
   if (!chapterCount.value) return { name: '', handle: null }
@@ -42,7 +42,7 @@ const startFirstChapter = async () => {
 }
 
 onMounted(async () => {
-  chapterHandles.value = await getChaptersHandles(browseAuthor.value, browseBook.value)
+  chapterHandles.value = await getChaptersHandles(currentAuthor.value, currentBook.value)
   if (audioPlayer.value) {
     console.log('audio player initialized')
   }
