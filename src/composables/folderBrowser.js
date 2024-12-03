@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { useStore } from 'vuex'
+import { FILE_EXTENSIONS_SUPPORTED } from '@/constants'
 
 export function useFolderBrowser () {
   const store = useStore()
@@ -10,6 +11,9 @@ export function useFolderBrowser () {
   let booksLoadedForAuthor = ''
   const bookHandles = ref([])
   let isCheckingBooks = false
+  let chaptersLoadedForBook = ''
+  const chapterHandles = ref([])
+  let isCheckingChapters = false
 
   const checkAuthorsLoaded = async () => {
     if (!authorsLoaded && !isCheckingAuthors) {
@@ -90,12 +94,61 @@ export function useFolderBrowser () {
     isCheckingBooks = false
   }
 
+  const checkChaptersLoaded = async (forAuthor, forBook) => {
+    if (chaptersLoadedForBook !== forBook && !isCheckingChapters) {
+      isCheckingChapters = true
+      await listChapters(forAuthor, forBook)
+    }
+  }
+
+  const getChaptersHandles = async (forAuthor, forBook) => {
+    await checkChaptersLoaded(forAuthor, forBook)
+    return chapterHandles.value
+  }
+
+  const getChapterHandle = async (forAuthor, forBook, chapter) => {
+    await checkChaptersLoaded(forAuthor, forBook)
+    const item = chapterHandles.value.find(handle => handle.name === chapter)
+    return item ? item.handle : null
+  }
+
+  const listChapters = async (forAuthor, forBook) => {
+    chapterHandles.value = []
+    chaptersLoadedForBook = ''
+    const bookHandle = await getBookHandle(forAuthor, forBook)
+    if (!bookHandle) {
+      isCheckingChapters = false
+      return
+    }
+
+    try {
+      for await (const [name, entry] of bookHandle.entries()) {
+        if (entry.kind === 'file') {
+          // get file extension
+          const extension = name.slice(name.lastIndexOf('.'))
+          if (FILE_EXTENSIONS_SUPPORTED.includes(extension)) {
+            chapterHandles.value.push({ name, handle: entry })
+          } else {
+            console.warn('File extension not supported: ' + extension)
+          }
+        }
+      }
+      chaptersLoadedForBook = forBook
+    } catch (e) {
+      console.error('Error on chapter listing:', e)
+    }
+    isCheckingChapters = false
+  }
+
   return {
     authorHandles,
     getAuthorHandles,
     getAuthorHandle,
     bookHandles,
     getBookHandles,
-    getBookHandle
+    getBookHandle,
+    chapterHandles,
+    getChaptersHandles,
+    getChapterHandle
   }
 }
