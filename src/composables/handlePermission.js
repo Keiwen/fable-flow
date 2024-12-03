@@ -11,13 +11,13 @@ export function useHandlePermission () {
     }
 
     if (permissionStatus.value === null && !isChecking) {
+      isChecking = true
       await checkPermission(handle)
     }
     return permissionStatus.value
   }
 
   const checkPermission = async (handle) => {
-    isChecking = true
     try {
       // Check current
       let permission = await handle.queryPermission({ mode: 'read' })
