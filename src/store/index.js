@@ -3,40 +3,38 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     libraryHandle: null, // default null
-    authorHandle: null,
-    bookHandle: null
+    browseAuthor: '',
+    browseBook: ''
   },
   getters: {
     getLibraryHandle: (state) => state.libraryHandle,
     getLibraryDirectory: (state) => state.libraryHandle ? state.libraryHandle.name : '',
-    getAuthorHandle: (state) => state.authorHandle,
-    getAuthorName: (state) => state.authorHandle ? state.authorHandle.name : '',
-    getBookHandle: (state) => state.bookHandle,
-    getBookName: (state) => state.bookHandle ? state.bookHandle.name : ''
+    getBrowseAuthor: (state) => state.browseAuthor,
+    getBrowseBook: (state) => state.browseBook
   },
   mutations: {
     setLibraryHandle (state, libraryHandle) {
       state.libraryHandle = libraryHandle
     },
-    setAuthorHandle (state, authorHandle) {
-      state.authorHandle = authorHandle
+    setBrowseAuthor (state, author) {
+      state.browseAuthor = author
     },
-    setBookHandle (state, bookHandle) {
-      state.bookHandle = bookHandle
+    setBrowseBook (state, book) {
+      state.browseBook = book
     }
   },
   actions: {
     updateLibraryHandle ({ commit }, libraryHandle) {
-      commit('setBookHandle', null)
-      commit('setAuthorHandle', null)
+      commit('setBrowseBook', '')
+      commit('setBrowseAuthor', '')
       commit('setLibraryHandle', libraryHandle)
     },
-    updateAuthorHandle ({ commit }, authorHandle) {
-      commit('setBookHandle', null)
-      commit('setAuthorHandle', authorHandle)
+    updateBrowseAuthor ({ commit }, author) {
+      commit('setBrowseBook', '')
+      commit('setBrowseAuthor', author)
     },
-    updateBookHandle ({ commit }, bookHandle) {
-      commit('setBookHandle', bookHandle)
+    updateBrowseBook ({ commit }, book) {
+      commit('setBrowseBook', book)
     }
   },
   modules: {
