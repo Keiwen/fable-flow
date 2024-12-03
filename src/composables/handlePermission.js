@@ -26,6 +26,9 @@ export function useHandlePermission () {
       // If not granted, ask for it
       if (permission !== 'granted') {
         permission = await handle.requestPermission({ mode: DIRECTORY_PERMISSION_MODE })
+        if (navigator.storage && navigator.storage.persist) {
+          await navigator.storage.persist()
+        }
       }
       permissionStatus.value = (permission === 'granted')
     } catch (e) {
