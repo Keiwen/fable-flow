@@ -1,3 +1,29 @@
+<script setup>
+import { ref, onMounted, watch } from 'vue'
+import { useStore } from 'vuex'
+import { useFolderBrowser } from '@/composables/folderBrowser'
+
+const store = useStore()
+const { authors, listAuthors } = useFolderBrowser()
+
+// data
+const selectedAuthor = ref('')
+
+// watch
+watch(selectedAuthor, (newValue) => {
+  const selectedHandler = authors.value.find(author => author.name === newValue)
+  if (selectedHandler) {
+    store.dispatch('updateAuthorHandle', selectedHandler.handle)
+  }
+})
+
+onMounted(async () => {
+  const libraryHandle = store.getters.getLibraryHandle
+  selectedAuthor.value = store.getters.getAuthorName
+  await listAuthors(libraryHandle)
+})
+</script>
+
 <template>
   <div>
     <p>
@@ -13,42 +39,6 @@
     </p>
   </div>
 </template>
-
-<script>
-import { ref, onMounted, watch } from 'vue'
-import { useStore } from 'vuex'
-import { useFolderBrowser } from '@/composables/useFolderBrowser'
-
-export default {
-  name: 'AuthorSelect',
-  setup () {
-    const store = useStore()
-    const { authors, listAuthors } = useFolderBrowser()
-
-    // data
-    const selectedAuthor = ref('')
-
-    // watch
-    watch(selectedAuthor, (newValue) => {
-      const selectedHandler = authors.value.find(author => author.name === newValue)
-      if (selectedHandler) {
-        store.dispatch('updateAuthorHandle', selectedHandler.handle)
-      }
-    })
-
-    onMounted(async () => {
-      const libraryHandle = store.getters.getLibraryHandle
-      selectedAuthor.value = store.getters.getAuthorName
-      await listAuthors(libraryHandle)
-    })
-
-    return {
-      authors,
-      selectedAuthor
-    }
-  }
-}
-</script>
 
 <style scoped lang="scss">
 

@@ -1,3 +1,38 @@
+<script setup>
+import { ref, computed, watch, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useFolderBrowser } from '@/composables/folderBrowser'
+
+const store = useStore()
+const { books, listBooks } = useFolderBrowser()
+
+// data
+const selectedBook = ref('')
+
+// computed
+const currentAuthorHandle = computed(() => store.getters.getAuthorHandle)
+
+// watch
+watch(currentAuthorHandle, async (newHandler) => {
+  if (newHandler) {
+    selectedBook.value = store.getters.getBookName
+    await listBooks(newHandler)
+  }
+})
+watch(selectedBook, (newValue) => {
+  const selectedHandler = books.value.find(book => book.name === newValue)
+  if (selectedHandler) {
+    store.dispatch('updateBookHandle', selectedHandler.handle)
+  }
+})
+
+onMounted(async () => {
+  const authorHandle = store.getters.getAuthorHandle
+  selectedBook.value = store.getters.getBookName
+  await listBooks(authorHandle)
+})
+</script>
+
 <template>
   <div>
     <p>
@@ -13,51 +48,6 @@
     </p>
   </div>
 </template>
-
-<script>
-import { ref, computed, watch, onMounted } from 'vue'
-import { useStore } from 'vuex'
-import { useFolderBrowser } from '@/composables/useFolderBrowser'
-
-export default {
-  name: 'BookSelect',
-  setup () {
-    const store = useStore()
-    const { books, listBooks } = useFolderBrowser()
-
-    // data
-    const selectedBook = ref('')
-
-    // computed
-    const currentAuthorHandle = computed(() => store.getters.getAuthorHandle)
-
-    // watch
-    watch(currentAuthorHandle, async (newHandler) => {
-      if (newHandler) {
-        selectedBook.value = store.getters.getBookName
-        await listBooks(newHandler)
-      }
-    })
-    watch(selectedBook, (newValue) => {
-      const selectedHandler = books.value.find(book => book.name === newValue)
-      if (selectedHandler) {
-        store.dispatch('updateBookHandle', selectedHandler.handle)
-      }
-    })
-
-    onMounted(async () => {
-      const authorHandle = store.getters.getAuthorHandle
-      selectedBook.value = store.getters.getBookName
-      await listBooks(authorHandle)
-    })
-
-    return {
-      books,
-      selectedBook
-    }
-  }
-}
-</script>
 
 <style scoped lang="scss">
 
