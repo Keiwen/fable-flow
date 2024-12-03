@@ -1,18 +1,18 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>Play</h1>
+    <chapter-info></chapter-info>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import ChapterInfo from '@/components/ChapterInfo'
 
 export default {
   name: 'ChapterPlayView',
   components: {
-    HelloWorld
+    ChapterInfo
   }
 }
 </script>
