@@ -12,13 +12,13 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { usePermission } from '@/composables/usePermission'
+import { useHandlePermission } from '@/composables/useHandlePermission'
 
 export default {
   name: 'LibratyPathSetup',
   setup () {
     const store = useStore()
-    const { checkPermission } = usePermission()
+    const { hasPermission } = useHandlePermission()
 
     // computed
     const getLibraryDirectory = computed(() => store.getters.getLibraryDirectory)
@@ -26,11 +26,11 @@ export default {
     // methods
     const selectPath = async () => {
       try {
-        const handle = await window.showDirectoryPicker() // display directory picker for user
-        const hasPermission = await checkPermission(handle)
+        const selectedHandle = await window.showDirectoryPicker() // display directory picker for user
+        const hasPermissionOnHandle = await hasPermission(selectedHandle)
         // if granted, update store
-        if (hasPermission) {
-          store.dispatch('updateLibraryHandle', handle)
+        if (hasPermissionOnHandle) {
+          store.dispatch('updateLibraryHandle', selectedHandle)
         }
       } catch (e) {
         console.error('Error on library path selection:', e)
