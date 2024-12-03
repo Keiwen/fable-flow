@@ -4,23 +4,23 @@ import { useStore } from 'vuex'
 import { useFolderBrowser } from '@/composables/folderBrowser'
 
 const store = useStore()
-const { authors, listAuthors } = useFolderBrowser()
+const { getAuthorHandles, getAuthorHandle } = useFolderBrowser()
 
 // data
 const selectedAuthor = ref('')
+const authorsHandles = ref([])
 
 // watch
-watch(selectedAuthor, (newValue) => {
-  const selectedHandler = authors.value.find(author => author.name === newValue)
+watch(selectedAuthor, async (newValue) => {
+  const selectedHandler = await getAuthorHandle(newValue)
   if (selectedHandler) {
-    store.dispatch('updateAuthorHandle', selectedHandler.handle)
+    store.dispatch('updateBrowseAuthor', newValue)
   }
 })
 
 onMounted(async () => {
-  const libraryHandle = store.getters.getLibraryHandle
-  selectedAuthor.value = store.getters.getAuthorName
-  await listAuthors(libraryHandle)
+  selectedAuthor.value = store.getters.getBrowseAuthor
+  authorsHandles.value = await getAuthorHandles()
 })
 </script>
 
@@ -32,7 +32,7 @@ onMounted(async () => {
     <p>
       Select author:
       <select v-model="selectedAuthor">
-        <option v-for="authorHandle in authors" :key="authorHandle.name" :value="authorHandle.name">
+        <option v-for="authorHandle in authorsHandles" :key="authorHandle.name" :value="authorHandle.name">
           {{ authorHandle.name }}
         </option>
       </select>
