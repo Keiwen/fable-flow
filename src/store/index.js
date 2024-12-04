@@ -10,19 +10,18 @@ const vuexPersist = new VuexPersistence({
 
 export default createStore({
   state: {
-    libraryHandle: null, // default null
+    libraryName: '',
     currentAuthor: '',
     currentBook: ''
   },
   getters: {
-    getLibraryHandle: (state) => state.libraryHandle,
-    getLibraryDirectory: (state) => state.libraryHandle ? state.libraryHandle.name : '',
+    getLibraryName: (state) => state.libraryName,
     getCurrentAuthor: (state) => state.currentAuthor,
     getCurrentBook: (state) => state.currentBook
   },
   mutations: {
-    setLibraryHandle (state, libraryHandle) {
-      state.libraryHandle = libraryHandle
+    setLibraryName (state, libraryName) {
+      state.libraryName = libraryName
     },
     setCurrentAuthor (state, author) {
       state.currentAuthor = author
@@ -32,10 +31,10 @@ export default createStore({
     }
   },
   actions: {
-    updateLibraryHandle ({ commit }, libraryHandle) {
+    updateLibraryName ({ commit }, libraryName) {
       commit('setCurrentBook', '')
       commit('setCurrentAuthor', '')
-      commit('setLibraryHandle', libraryHandle)
+      commit('setLibraryName', libraryName)
     },
     updateCurrentAuthor ({ commit }, author) {
       commit('setCurrentBook', '')

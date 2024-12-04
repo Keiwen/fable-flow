@@ -16,7 +16,7 @@ const selectPath = async () => {
     const hasPermissionOnHandle = await hasPermission(selectedHandle)
     // if granted, update store
     if (hasPermissionOnHandle) {
-      store.dispatch('updateLibraryHandle', selectedHandle)
+      store.dispatch('updateLibraryName', selectedHandle.name)
     }
   } catch (e) {
     console.error('Error on library path selection:', e)
