@@ -1,4 +1,12 @@
 import { createStore } from 'vuex'
+import VuexPersistence from 'vuex-persist'
+import { LOCAL_STORAGE_KEY } from '@/constants'
+
+// create vuex-persist instance
+const vuexPersist = new VuexPersistence({
+  storage: window.localStorage,
+  key: LOCAL_STORAGE_KEY
+})
 
 export default createStore({
   state: {
@@ -38,5 +46,7 @@ export default createStore({
     }
   },
   modules: {
-  }
+  },
+  strict: process.env.NODE_ENV !== 'production',
+  plugins: [vuexPersist.plugin]
 })
