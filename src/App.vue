@@ -1,3 +1,9 @@
+<script setup>
+import { useLibraryLoader } from '@/composables/libraryLoader'
+
+useLibraryLoader()
+</script>
+
 <template>
   <nav>
     <router-link to="/setup">Setup</router-link> |
