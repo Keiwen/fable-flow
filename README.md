@@ -16,7 +16,7 @@ This is a Progressive Web App (PWA). If you are not familiar with this,
 it is a web application that could act as a device application on
 Android.
 
-Simply open the application link, your device should offer you to
+Simply open the [application link](https://keiwen.github.io/fable-flow/), your device should offer you to
 'add to home screen' or 'install'.
 
 ### In-app
