@@ -21,13 +21,15 @@ export default createStore({
     },
     currentLibrary: '',
     currentAuthor: '',
-    currentBook: ''
+    currentBook: '',
+    currentChapterIndex: 0
   },
   getters: {
     libraryHandle: (state) => state.library.handle,
     libraryName: (state) => state.library.handle ? state.library.handle.name : '',
     currentAuthor: (state) => state.currentAuthor,
     currentBook: (state) => state.currentBook,
+    currentChapterIndex: (state) => state.currentChapterIndex,
     authorsList: (state) => Object.keys(state.library.tracks),
     getBooksFromAuthor: (state) => (author) => {
       if (!state.library.tracks[author]) return []
@@ -42,6 +44,9 @@ export default createStore({
       const chapters = getters.getChaptersFromBook(author, book)
       if (!chapters[index]) return null
       return chapters[index]
+    },
+    getCurrentChapter: (state, getters) => () => {
+      return getters.getChapterFromBook(state.currentAuthor, state.currentBook, state.currentChapterIndex)
     }
   },
   mutations: {
@@ -58,8 +63,16 @@ export default createStore({
     setCurrentBook (state, book) {
       state.currentBook = book
     },
+    setCurrentChapterIndex (state, index) {
+      state.currentChapterIndex = index
+    },
     setAuthorBooks (state, payload) {
       state.library.tracks[payload.author] = payload.books
+    },
+    resetCurrentSelection (state) {
+      state.currentAuthor = ''
+      state.currentBook = ''
+      state.currentChapterIndex = 0
     }
   },
   actions: {
@@ -67,16 +80,23 @@ export default createStore({
       commit('setLibraryHandle', libraryHandle)
       if (!libraryHandle) {
         commit('setCurrentLibrary', '')
+        commit('resetCurrentSelection')
       } else if (libraryHandle.name !== state.currentLibrary) {
         commit('setCurrentLibrary', libraryHandle.name)
+        commit('resetCurrentSelection')
       }
     },
     updateCurrentAuthor ({ commit }, author) {
       commit('setCurrentBook', '')
+      commit('setCurrentChapterIndex', 0)
       commit('setCurrentAuthor', author)
     },
     updateCurrentBook ({ commit }, book) {
+      commit('setCurrentChapterIndex', 0)
       commit('setCurrentBook', book)
+    },
+    updateCurrentChapterIndex ({ commit }, index) {
+      commit('setCurrentChapterIndex', index)
     },
     setAuthorBooks ({ commit }, payload) {
       commit('setAuthorBooks', payload)
