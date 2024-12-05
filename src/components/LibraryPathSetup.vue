@@ -7,7 +7,7 @@ const store = useStore()
 const { hasPermission } = useHandlePermission()
 
 // computed
-const getLibraryDirectory = computed(() => store.getters.getLibraryDirectory)
+const libraryName = computed(() => store.getters.libraryName)
 
 // methods
 const selectPath = async () => {
@@ -16,7 +16,7 @@ const selectPath = async () => {
     const hasPermissionOnHandle = await hasPermission(selectedHandle)
     // if granted, update store
     if (hasPermissionOnHandle) {
-      store.dispatch('updateLibraryName', selectedHandle.name)
+      store.dispatch('updateLibraryHandle', selectedHandle)
     }
   } catch (e) {
     console.error('Error on library path selection:', e)
@@ -27,7 +27,7 @@ const selectPath = async () => {
 <template>
   <div>
     <p>
-      Current directory is set to {{ getLibraryDirectory }}
+      Current directory is set to {{ libraryName }}
     </p>
     <p>
       <button @click="selectPath">Select a directory as library</button>

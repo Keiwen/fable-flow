@@ -1,26 +1,23 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useFolderBrowser } from '@/composables/folderBrowser'
 
 const store = useStore()
-const { getAuthorHandles, getAuthorHandle } = useFolderBrowser()
 
 // data
 const selectedAuthor = ref('')
-const authorsHandles = ref([])
+
+// computed
+const authors = computed(() => store.getters.authorsList)
 
 // watch
 watch(selectedAuthor, async (newValue) => {
-  const selectedHandler = await getAuthorHandle(newValue)
-  if (selectedHandler) {
-    store.dispatch('updateCurrentAuthor', newValue)
-  }
+  if (!newValue) return
+  store.dispatch('updateCurrentAuthor', newValue)
 })
 
 onMounted(async () => {
-  selectedAuthor.value = store.getters.getCurrentAuthor
-  authorsHandles.value = await getAuthorHandles()
+  selectedAuthor.value = store.getters.currentAuthor
 })
 </script>
 
@@ -32,8 +29,8 @@ onMounted(async () => {
     <p>
       Select author:
       <select v-model="selectedAuthor">
-        <option v-for="authorHandle in authorsHandles" :key="authorHandle.name" :value="authorHandle.name">
-          {{ authorHandle.name }}
+        <option v-for="author in authors" :key="author" :value="author">
+          {{ author }}
         </option>
       </select>
     </p>

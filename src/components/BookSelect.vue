@@ -1,35 +1,28 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
-import { useFolderBrowser } from '@/composables/folderBrowser'
 
 const store = useStore()
-const { getBookHandles, getBookHandle } = useFolderBrowser()
 
 // data
 const selectedBook = ref('')
-const bookHandles = ref([])
 
 // computed
-const currentAuthor = computed(() => store.getters.getCurrentAuthor)
+const currentAuthor = computed(() => store.getters.currentAuthor)
+const books = computed(() => store.getters.getBooksFromAuthor(currentAuthor.value))
 
 // watch
 watch(currentAuthor, async (newValue) => {
-  if (newValue === '') return
-  selectedBook.value = store.getters.getCurrentBook
-  bookHandles.value = await getBookHandles(newValue)
+  if (!newValue) return
+  selectedBook.value = store.getters.currentBook
 })
 watch(selectedBook, async (newValue) => {
-  if (newValue === '') return
-  const selectedHandler = await getBookHandle(currentAuthor.value, newValue)
-  if (selectedHandler) {
-    store.dispatch('updateCurrentBook', newValue)
-  }
+  if (!newValue) return
+  store.dispatch('updateCurrentBook', newValue)
 })
 
 onMounted(async () => {
-  selectedBook.value = store.getters.getCurrentBook
-  bookHandles.value = await getBookHandles(currentAuthor.value)
+  selectedBook.value = store.getters.currentBook
 })
 </script>
 
@@ -41,8 +34,8 @@ onMounted(async () => {
     <p>
       Select book:
       <select v-model="selectedBook">
-        <option v-for="bookHandle in bookHandles" :key="bookHandle.name" :value="bookHandle.name">
-          {{ bookHandle.name }}
+        <option v-for="book in books" :key="book" :value="book">
+          {{ book }}
         </option>
       </select>
     </p>
