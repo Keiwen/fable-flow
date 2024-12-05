@@ -2,7 +2,7 @@
   "name": "FableFlow",
   "short_name": "FableFlow",
   "description": "A serene and inspiring audiobook experience.",
-  "start_url": "/",
+  "start_url": "/fable-flow/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#001d3d",
