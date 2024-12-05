@@ -12,7 +12,7 @@ const authors = computed(() => store.getters.authorsList)
 
 // watch
 watch(selectedAuthor, async (newValue) => {
-  if (!newValue) return
+  if (!newValue || newValue === store.getters.currentAuthor) return
   store.dispatch('updateCurrentAuthor', newValue)
 })
 

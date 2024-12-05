@@ -17,7 +17,7 @@ watch(currentAuthor, async (newValue) => {
   selectedBook.value = store.getters.currentBook
 })
 watch(selectedBook, async (newValue) => {
-  if (!newValue) return
+  if (!newValue || newValue === store.getters.currentBook) return
   store.dispatch('updateCurrentBook', newValue)
 })
 
