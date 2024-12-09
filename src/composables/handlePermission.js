@@ -1,9 +1,11 @@
 import { ref } from 'vue'
 import { DIRECTORY_PERMISSION_MODE } from '@/constants'
+import { useFlashMessages } from '@/composables/flashMessages'
 
 export function useHandlePermission () {
   const permissionStatus = ref(null)
   let isChecking = false
+  const { addErrorMessage } = useFlashMessages()
 
   const hasPermission = async (handle) => {
     if (!handle) {
@@ -32,7 +34,8 @@ export function useHandlePermission () {
       }
       permissionStatus.value = (permission === 'granted')
     } catch (e) {
-      console.error('Issue on permission check:', e)
+      addErrorMessage('An error occurred on permission check')
+      console.error(e)
       permissionStatus.value = false
     }
     isChecking = false

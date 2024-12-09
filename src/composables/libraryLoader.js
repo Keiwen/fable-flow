@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { FILE_EXTENSIONS_SUPPORTED } from '@/constants'
 import { useStore } from 'vuex'
+import { useFlashMessages } from '@/composables/flashMessages'
 
 const libraryHandle = ref(null)
 const tracks = ref({})
@@ -8,6 +9,7 @@ const tracks = ref({})
 export function useLibraryLoader (store) {
   let isLoading = false
   if (!store) store = useStore()
+  const { addErrorMessage } = useFlashMessages()
 
   const listAuthors = async () => {
     const list = []
@@ -20,7 +22,8 @@ export function useLibraryLoader (store) {
         }
       }
     } catch (e) {
-      console.error('Error on authors listing:', e)
+      addErrorMessage('An error occurred on authors listing')
+      console.error(e)
     }
     return list
   }
@@ -36,7 +39,8 @@ export function useLibraryLoader (store) {
         }
       }
     } catch (e) {
-      console.error('Error on book listing:', e)
+      addErrorMessage('An error occurred on books listing for author ' + authorHandle.name)
+      console.error(e)
     }
     return list
   }
@@ -53,12 +57,13 @@ export function useLibraryLoader (store) {
           if (FILE_EXTENSIONS_SUPPORTED.includes(extension)) {
             list.push(entry)
           } else {
-            console.warn('File extension not supported: ' + extension)
+            console.log('File extension not supported for file ' + bookHandle.name + '/' + name)
           }
         }
       }
     } catch (e) {
-      console.error('Error on book listing:', e)
+      addErrorMessage('An error occurred on chapters listing for book ' + bookHandle.name)
+      console.error(e)
     }
     return list
   }

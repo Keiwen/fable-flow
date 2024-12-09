@@ -2,9 +2,11 @@
 import { computed } from 'vue'
 import { useHandlePermission } from '@/composables/handlePermission'
 import { useLibraryLoader } from '@/composables/libraryLoader'
+import { useFlashMessages } from '@/composables/flashMessages'
 
 const { hasPermission } = useHandlePermission()
 const { libraryHandle, loadLibrary } = useLibraryLoader()
+const { addErrorMessage } = useFlashMessages()
 
 // computed
 const libraryName = computed(() => libraryHandle.value ? libraryHandle.value.name : '')
@@ -12,14 +14,19 @@ const libraryName = computed(() => libraryHandle.value ? libraryHandle.value.nam
 // methods
 const selectPath = async () => {
   try {
-    const selectedHandle = await window.showDirectoryPicker() // display directory picker for user
-    const hasPermissionOnHandle = await hasPermission(selectedHandle)
-    // if granted, update store
-    if (hasPermissionOnHandle) {
-      loadLibrary(selectedHandle)
+    if ('showDirectoryPicker' in window) {
+      const selectedHandle = await window.showDirectoryPicker() // display directory picker for user
+      const hasPermissionOnHandle = await hasPermission(selectedHandle)
+      // if granted, update store
+      if (hasPermissionOnHandle) {
+        loadLibrary(selectedHandle)
+      }
+    } else {
+      addErrorMessage('Unfortunately, your browser does not support this functionality. Please try with Chrome > 132.')
     }
   } catch (e) {
-    console.error('Error on library path selection:', e)
+    addErrorMessage('An error occurred on library selection')
+    console.error(e)
   }
 }
 </script>

@@ -1,10 +1,12 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useLibraryLoader } from '@/composables/libraryLoader'
+import { useFlashMessages } from '@/composables/flashMessages'
 
 const store = useStore()
 const { getChaptersFromBook, getChapterFromBook } = useLibraryLoader()
+const { addWarningMessage, addErrorMessage } = useFlashMessages()
 
 // data
 const audioPlayer = ref(null)
@@ -34,12 +36,14 @@ const nextChapter = async () => {
   if (nextChapter) {
     store.dispatch('selectChapterIndex', nextIndex)
     playChapter(nextChapter)
+  } else {
+    addWarningMessage('This is the last chapter')
   }
 }
 
 const playChapter = async (chapterHandle) => {
   if (!chapterHandle) {
-    console.error('No chapter found')
+    addErrorMessage('No chapter found')
     return
   }
   try {
@@ -53,15 +57,10 @@ const playChapter = async (chapterHandle) => {
     audioPlayer.value.load()
     audioPlayer.value.play()
   } catch (e) {
-    console.error('Cannot start audio file', e)
+    addErrorMessage('Cannot start audio file')
+    console.error(e)
   }
 }
-
-onMounted(async () => {
-  if (audioPlayer.value) {
-    console.log('audio player initialized')
-  }
-})
 </script>
 
 <template>
