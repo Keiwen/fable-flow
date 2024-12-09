@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useHandlePermission } from '@/composables/handlePermission'
 import { useLibraryLoader } from '@/composables/libraryLoader'
 import { useFlashMessages } from '@/composables/flashMessages'
@@ -7,6 +8,7 @@ import { useFlashMessages } from '@/composables/flashMessages'
 const { hasPermission } = useHandlePermission()
 const { libraryHandle, loadLibrary } = useLibraryLoader()
 const { addErrorMessage } = useFlashMessages()
+const router = useRouter()
 
 // computed
 const libraryName = computed(() => libraryHandle.value ? libraryHandle.value.name : '')
@@ -19,7 +21,8 @@ const selectPath = async () => {
       const hasPermissionOnHandle = await hasPermission(selectedHandle)
       // if granted, update store
       if (hasPermissionOnHandle) {
-        loadLibrary(selectedHandle)
+        await loadLibrary(selectedHandle)
+        router.push({ name: 'chapter' })
       }
     } else {
       addErrorMessage('Unfortunately, your browser does not support this functionality. Please try with Chrome > 132.')
