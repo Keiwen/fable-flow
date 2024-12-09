@@ -4,6 +4,12 @@ module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: process.env.VUE_APP_PUBLIC_PATH || '/',
   outputDir: process.env.VUE_APP_OUTPUT_DIR || 'dist',
+  pwa: {
+    iconPaths: {
+      favicon32: 'favicon.ico',
+      favicon16: 'favicon.ico'
+    }
+  },
   configureWebpack: {
     plugins: [
       new webpack.DefinePlugin({
