@@ -1,9 +1,6 @@
 <script setup>
-import { useLibraryLoader } from '@/composables/libraryLoader'
 import { useFlashMessages } from '@/composables/flashMessages'
 import { computed } from 'vue'
-
-useLibraryLoader()
 
 const { flashMessages } = useFlashMessages()
 const messages = computed(() => flashMessages.value)

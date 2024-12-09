@@ -1,26 +1,27 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import { useLibraryLoader } from '@/composables/libraryLoader'
 
 const store = useStore()
+const { getChaptersFromBook, getChapterFromBook } = useLibraryLoader()
 
 // data
 const audioPlayer = ref(null)
 const chapterSrc = ref(null)
 
 // computed
-const currentAuthor = computed(() => store.getters.currentAuthor)
-const currentBook = computed(() => store.getters.currentBook)
-const chapters = computed(() => store.getters.getChaptersFromBook(currentAuthor.value, currentBook.value))
+const currentAuthor = computed(() => store.getters.author)
+const currentBook = computed(() => store.getters.book)
+const chapters = computed(() => getChaptersFromBook(currentAuthor.value, currentBook.value))
 const chapterCount = computed(() => chapters.value.length)
-const currentChapterIndex = computed(() => store.getters.currentChapterIndex)
-const currentChapter = computed(() => store.getters.getCurrentChapter())
+const currentChapterIndex = computed(() => store.getters.chapterIndex)
+const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, currentBook.value, currentChapterIndex.value))
 
 // methods
-const startBook = () => {
-  const firstChapter = store.getters.getChapterFromBook(currentAuthor.value, currentBook.value, 0)
-  store.dispatch('updateCurrentChapterIndex', 0)
-  playChapter(firstChapter)
+const startBook = async () => {
+  await store.dispatch('selectChapterIndex', 0)
+  playChapter(currentChapter.value)
 }
 
 const resumeBook = () => {
@@ -29,9 +30,9 @@ const resumeBook = () => {
 
 const nextChapter = async () => {
   const nextIndex = currentChapterIndex.value + 1
-  const nextChapter = store.getters.getChapterFromBook(currentAuthor.value, currentBook.value, nextIndex)
+  const nextChapter = getChapterFromBook(currentAuthor.value, currentBook.value, nextIndex)
   if (nextChapter) {
-    store.dispatch('updateCurrentChapterIndex', nextIndex)
+    store.dispatch('selectChapterIndex', nextIndex)
     playChapter(nextChapter)
   }
 }

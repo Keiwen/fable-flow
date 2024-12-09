@@ -1,17 +1,13 @@
-import { computed, watch } from 'vue'
-import { useStore } from 'vuex'
+import { ref } from 'vue'
 import { FILE_EXTENSIONS_SUPPORTED } from '@/constants'
+import { useStore } from 'vuex'
 
-export function useLibraryLoader () {
-  const store = useStore()
-  const libraryHandle = computed(() => store.getters.libraryHandle)
+const libraryHandle = ref(null)
+const tracks = ref({})
+
+export function useLibraryLoader (store) {
   let isLoading = false
-
-  watch(libraryHandle, async (newValue) => {
-    if (!newValue) return
-    isLoading = true
-    loadLibrary()
-  })
+  if (!store) store = useStore()
 
   const listAuthors = async () => {
     const list = []
@@ -67,7 +63,10 @@ export function useLibraryLoader () {
     return list
   }
 
-  const loadLibrary = async () => {
+  const loadLibrary = async (mainHandle) => {
+    isLoading = true
+    libraryHandle.value = mainHandle
+    tracks.value = {}
     const authors = await listAuthors()
     for (const authorHandle of authors) {
       const authorBooks = {}
@@ -75,12 +74,41 @@ export function useLibraryLoader () {
       for (const bookHandle of books) {
         authorBooks[bookHandle.name] = await listChaptersFromBook(bookHandle)
       }
-      store.dispatch('setAuthorBooks', { author: authorHandle.name, books: authorBooks })
+      tracks.value[authorHandle.name] = authorBooks
     }
+    await store.dispatch('selectLibrary', mainHandle.name)
     isLoading = false
   }
 
+  const getAuthorsList = () => {
+    return Object.keys(tracks.value)
+  }
+
+  const getBooksFromAuthor = (author) => {
+    if (!tracks.value[author]) return []
+    return Object.keys(tracks.value[author])
+  }
+
+  const getChaptersFromBook = (author, book) => {
+    if (!tracks.value[author]) return []
+    if (!tracks.value[author][book]) return []
+    return tracks.value[author][book]
+  }
+
+  const getChapterFromBook = (author, book, index) => {
+    const chapters = getChaptersFromBook(author, book)
+    if (!chapters[index]) return null
+    return chapters[index]
+  }
+
   return {
+    libraryHandle,
+    tracks,
+    loadLibrary,
+    getAuthorsList,
+    getBooksFromAuthor,
+    getChaptersFromBook,
+    getChapterFromBook,
     isLoading
   }
 }

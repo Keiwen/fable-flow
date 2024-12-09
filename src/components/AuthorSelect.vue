@@ -1,23 +1,25 @@
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
 import { useStore } from 'vuex'
+import { useLibraryLoader } from '@/composables/libraryLoader'
 
 const store = useStore()
+const { getAuthorsList } = useLibraryLoader()
 
 // data
 const selectedAuthor = ref('')
 
 // computed
-const authors = computed(() => store.getters.authorsList)
+const authors = computed(() => getAuthorsList())
 
 // watch
 watch(selectedAuthor, async (newValue) => {
-  if (!newValue || newValue === store.getters.currentAuthor) return
-  store.dispatch('updateCurrentAuthor', newValue)
+  if (!newValue || newValue === store.getters.author) return
+  store.dispatch('selectAuthor', newValue)
 })
 
 onMounted(async () => {
-  selectedAuthor.value = store.getters.currentAuthor
+  selectedAuthor.value = store.getters.author
 })
 </script>
 

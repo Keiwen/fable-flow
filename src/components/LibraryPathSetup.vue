@@ -1,13 +1,13 @@
 <script setup>
 import { computed } from 'vue'
-import { useStore } from 'vuex'
 import { useHandlePermission } from '@/composables/handlePermission'
+import { useLibraryLoader } from '@/composables/libraryLoader'
 
-const store = useStore()
 const { hasPermission } = useHandlePermission()
+const { libraryHandle, loadLibrary } = useLibraryLoader()
 
 // computed
-const libraryName = computed(() => store.getters.libraryName)
+const libraryName = computed(() => libraryHandle.value ? libraryHandle.value.name : '')
 
 // methods
 const selectPath = async () => {
@@ -16,7 +16,7 @@ const selectPath = async () => {
     const hasPermissionOnHandle = await hasPermission(selectedHandle)
     // if granted, update store
     if (hasPermissionOnHandle) {
-      store.dispatch('updateLibraryHandle', selectedHandle)
+      loadLibrary(selectedHandle)
     }
   } catch (e) {
     console.error('Error on library path selection:', e)
