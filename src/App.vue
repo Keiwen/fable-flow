@@ -1,7 +1,13 @@
 <script setup>
 import { useLibraryLoader } from '@/composables/libraryLoader'
+import { useFlashMessages } from '@/composables/flashMessages'
+import { computed } from 'vue'
 
 useLibraryLoader()
+
+const { flashMessages } = useFlashMessages()
+const messages = computed(() => flashMessages.value)
+
 </script>
 
 <template>
@@ -12,6 +18,11 @@ useLibraryLoader()
     <router-link to="/settings">Settings</router-link>
   </nav>
   <router-view/>
+  <div>
+    <ul>
+      <li v-for="(message, msgIndex) in messages" :key="msgIndex">{{ message.message }}</li>
+    </ul>
+  </div>
 </template>
 
 <style lang="scss">
