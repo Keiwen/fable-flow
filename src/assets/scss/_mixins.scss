@@ -35,3 +35,14 @@
   background: -webkit-radial-gradient(center, ellipse cover, $centerColor 0%, $borderColor 100%);
   background: radial-gradient(ellipse at center, $centerColor 0%, $borderColor 100%);
 }
+
+//background transition
+@mixin backgroundTransition($bgColor) {
+  background-color: $main-bg;
+  transform-origin: 50%;
+  @include transition(all 0.5s ease-in-out);
+  &:hover {
+    color: $main-bg;
+    background: $bgColor;
+  }
+}
