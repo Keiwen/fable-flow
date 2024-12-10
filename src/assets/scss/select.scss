@@ -8,6 +8,7 @@ select {
   background: url('@/assets/img/caret_down.svg') no-repeat right 0.3rem center / 1.8rem,
   linear-gradient(to left, rgba($main-bg, 0.3) 2.5rem, rgba($main-bg, 0.05) 0);
   color: $light;
+  font-size: $font-size-default;
   cursor: pointer;
   width: calc(100% - $margin-side);
   &:focus {
