@@ -1,0 +1,26 @@
+.alert {
+  margin-right: $margin-side;
+  margin-left: $margin-side;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  @include containerColor($light);
+  @include animation(puff-in, 0.7s, linear, 1);
+  &.alert-primary {
+    @include containerColor($primary);
+  }
+  &.alert-secondary {
+    @include containerColor($primary);
+  }
+  &.alert-success {
+    @include containerColor($success);
+  }
+  &.alert-info {
+    @include containerColor($info);
+  }
+  &.alert-warning {
+    @include containerColor($warning);
+  }
+  &.alert-danger {
+    @include containerColor($danger);
+  }
+}
