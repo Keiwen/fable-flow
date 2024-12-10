@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Setup</h1>
+    <h1>Library setup</h1>
     <library-path-setup></library-path-setup>
   </div>
 </template>

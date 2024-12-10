@@ -36,11 +36,20 @@ const selectPath = async () => {
 
 <template>
   <div>
-    <p>
+    <p v-if="libraryName">
       Current directory is set to {{ libraryName }}
     </p>
+    <p v-else>
+      No directory set
+    </p>
+    <p class="help" v-if="!libraryName">
+      Choose a directory from your device where your audio books are stored.
+      Fable Flow will request read access to it.
+      No files nor folder will be modified by Fable Flow.
+      You'll be able to revoke its access at any time from your device settings.
+    </p>
     <p>
-      <button @click="selectPath">Select a directory as library</button>
+      <button class="btn-primary" @click="selectPath">Select a directory as library</button>
     </p>
   </div>
 </template>

@@ -26,7 +26,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
     height: auto;
-    padding-top: 20px;
+    padding: 20px 10px 10px 10px;
 
     form {
         text-align: justify;
@@ -46,6 +46,12 @@ body {
         &.router-link-exact-active {
             color: $secondary;
         }
+    }
+
+    .help {
+        font-size: 0.8em;
+        font-style: italic;
+        text-align: justify;
     }
 
     button,.btn {
