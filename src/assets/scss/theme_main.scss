@@ -17,18 +17,80 @@ $border-radius: 50px;
 @import 'common';
 
 body {
-  @include radialGradient($light-bg, $main-bg)
-}
+  @include radialGradient($light-bg, $main-bg);
 
-.message-container {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
+  .message-container {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
 
-  .alert {
-    margin-right: $margin-side;
-    margin-left: $margin-side;
+    .alert {
+      margin-right: $margin-side;
+      margin-left: $margin-side;
+    }
+  }
+
+  .content {
+    margin-top: 100px;
+  }
+
+  nav {
+    position: fixed;
+    width: 100%;
+    top: 10px;
+    left: 0;
+
+    >.nav-item {
+      // cancel base style
+      &:not(:last-child) {
+        margin-right: 15px;
+        &:after {
+          margin-left: 0;
+          content: "";
+        }
+      }
+      &:nth-child(1) {
+        position: fixed;
+        left: $margin-side;
+        background: url('@/assets/img/book-white.svg') no-repeat center / 3rem;
+      }
+      &:nth-child(2) {
+        margin: auto;
+        a {
+          background: url('@/assets/img/logo.png') no-repeat center;
+          width: 100px;
+          height: 100px;
+          line-height: 75px;
+        }
+      }
+      &:nth-child(3) {
+        position: fixed;
+        right: $margin-side;
+        background: url('@/assets/img/cogs-white.svg') no-repeat center / 3rem;
+      }
+
+      a {
+        display: inline-block;
+        text-indent: -9999px;
+        width: 80px;
+        height: 80px;
+        border-radius: 75px;
+        line-height: 57px;
+        border: 5px solid $secondary;
+        &:hover, &:active {
+          border-color: $light;
+        }
+        &:focus {
+          border-color: $light;
+        }
+        &.router-link-exact-active {
+          border-color: $primary;
+        }
+      }
+
+    }
+
   }
 }
