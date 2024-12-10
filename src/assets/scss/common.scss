@@ -3,6 +3,7 @@
 
 /* Main Style */
 
+$margin-side: 10px;
 $font-size-default: 1.1rem;
 $font-size-large: 1.2rem;
 $font-size-small: 0.9rem;
@@ -19,6 +20,7 @@ $font-size-small: 0.9rem;
     --light: #{$light};
     --dark: #{$dark};
     --border-radius: #{$border-radius};
+    --margin-side: #{$margin-side};
     --font-size-default: #{$font-size-default};
     --font-size-large: #{$font-size-large};
     --font-size-small: #{$font-size-small};
@@ -33,19 +35,15 @@ body {
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
     height: auto;
-    padding: 20px 10px 10px 10px;
+    padding: 20px $margin-side 10px $margin-side;
     box-sizing: border-box;
     font-size: $font-size-default;
 
     form {
         text-align: justify;
-
-        label {
-            font-size: $font-size-large;
-            &:after {
-                content: ":";
-            }
-        }
+    }
+    label {
+        font-size: $font-size-large;
     }
 
     a {
@@ -63,76 +61,12 @@ body {
         text-align: justify;
     }
 
-    button,.btn {
-        background-color: transparent;
-        color: $light;
-        border: 1px solid $light;
-        border-radius: $border-radius;
-        padding: .25rem 1rem;
-        line-height: 2;
-        font-size: $font-size-default;
-        text-align: center;
-        text-decoration: none;
-        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-        user-select: none;
-        @include backgroundTransition($light);
-        &.btn-primary {
-            color: $primary;
-            border-color: $primary;
-            @include backgroundTransition($primary);
-        }
-        &.btn-secondary {
-            color: $secondary;
-            border-color: $secondary;
-            @include backgroundTransition($secondary);
-        }
-        &.btn-success {
-            color: $success;
-            border-color: $success;
-            @include backgroundTransition($success);
-        }
-        &.btn-info {
-            color: $info;
-            border-color: $info;
-            @include backgroundTransition($info);
-        }
-        &.btn-warning {
-            color: $warning;
-            border-color: $warning;
-            @include backgroundTransition($warning);
-        }
-        &.btn-danger {
-            color: $danger;
-            border-color: $danger;
-            @include backgroundTransition($danger);
-        }
+    .selection {
+        margin-bottom: 20px;
     }
 
-    .alert {
-        margin-right: 10px;
-        margin-left: 10px;
-        padding: .75rem 1.25rem;
-        margin-bottom: 1rem;
-        @include containerColor($light);
-        @include animation(puff-in, 0.7s, linear, 1);
-        &.alert-primary {
-            @include containerColor($primary);
-        }
-        &.alert-secondary {
-            @include containerColor($primary);
-        }
-        &.alert-success {
-            @include containerColor($success);
-        }
-        &.alert-info {
-            @include containerColor($info);
-        }
-        &.alert-warning {
-            @include containerColor($warning);
-        }
-        &.alert-danger {
-            @include containerColor($danger);
-        }
-    }
+    @import 'button';
+    @import 'alert';
+    @import 'select';
 
 }

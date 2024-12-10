@@ -1,0 +1,20 @@
+
+select {
+  appearance: none;
+
+  display: block;
+  border: 1px solid $primary;
+  padding: 0.5rem 4rem 0.5rem 1rem;
+  background: url('@/assets/img/caret_down.svg') no-repeat right 0.3rem center / 1.8rem,
+  linear-gradient(to left, rgba($main-bg, 0.3) 2.5rem, rgba($main-bg, 0.05) 0);
+  color: $light;
+  cursor: pointer;
+  width: calc(100% - $margin-side);
+  &:focus {
+    outline: none;
+  }
+  option {
+    color: $main-color;
+    background-color: $main-bg;
+  }
+}
