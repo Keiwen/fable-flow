@@ -65,21 +65,24 @@ const playChapter = async (chapterHandle) => {
 
 <template>
   <div>
-    <p>
-      Current book have {{ chapterCount }} chapters
-    </p>
-    <p>Current chapter is {{ currentChapter ? currentChapter.name : '' }}</p>
-    <p>
-      <button @click="startBook">Start book over</button>
-      <button @click="resumeBook">Resume book</button>
-    </p>
     <div>
       <audio controls ref="audioPlayer">
         <source :src="chapterSrc">
       </audio>
     </div>
     <p>
-      <button @click="nextChapter">Next chapter</button>
+      {{ currentAuthor }}: {{ currentBook }}
+    </p>
+    <p>
+      Chapter {{ currentChapterIndex + 1 }}/{{ chapterCount }}:
+      {{ currentChapter ? currentChapter.name : '' }}
+    </p>
+    <p>
+      <button class="btn-warning" @click="startBook">Start book over</button>
+      <button class="btn-success" @click="resumeBook">Resume book</button>
+    </p>
+    <p>
+      <button class="btn-info" @click="nextChapter">Next chapter</button>
     </p>
   </div>
 </template>

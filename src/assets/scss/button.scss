@@ -11,6 +11,7 @@ button,.btn {
   text-decoration: none;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   user-select: none;
+  margin: 5px;
   @include backgroundTransition($light);
   &.btn-primary {
     color: $primary;
