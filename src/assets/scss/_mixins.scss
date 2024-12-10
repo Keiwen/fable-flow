@@ -1,0 +1,26 @@
+/* ** MIXINS ** */
+
+//transitions
+@mixin transition($transition) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+//transform
+@mixin transform($transforms) {
+  -moz-transform: $transforms;
+  -o-transform: $transforms;
+  -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+  transform: $transforms;
+}
+
+//radial gradient
+@mixin radialGradient($centerColor, $borderColor) {
+  background: -moz-radial-gradient(center, ellipse cover, $centerColor 0%, $borderColor 100%);
+  background: -webkit-radial-gradient(center, ellipse cover, $centerColor 0%, $borderColor 100%);
+  background: radial-gradient(ellipse at center, $centerColor 0%, $borderColor 100%);
+}

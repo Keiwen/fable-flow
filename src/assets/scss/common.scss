@@ -1,0 +1,37 @@
+@import '_mixins';
+
+/* Main Style */
+
+
+body {
+    background-color: $main-bg;
+    color: $main-color;
+    text-align: center;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    height: auto;
+    padding-top: 20px;
+
+    form {
+        text-align: justify;
+
+        label {
+            font-size: 1.1em;
+            &:after {
+                content: ":";
+            }
+        }
+    }
+
+    a {
+        font-weight: bold;
+        color: $primary;
+
+        &.router-link-exact-active {
+            color: $secondary;
+        }
+    }
+
+}

@@ -1,0 +1,22 @@
+
+$main-color: #C5FDFE;
+$main-bg: #0F1721;
+$light-bg: #4A5A64;
+
+$primary: #D6B14A;
+$secondary: #1768A4;
+$success: #479f76;
+$info: #0aa2c0;
+$warning: #cc9a06;
+$danger: #c6303e;
+$light: $main-color;
+$dark: $main-bg;
+
+$a-color: $primary;
+$border-radius: 50px;
+
+@import 'common';
+
+body {
+  @include radialGradient($light-bg, $main-bg)
+}
