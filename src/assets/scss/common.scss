@@ -1,7 +1,21 @@
 @import '_mixins';
+@import '_animations';
 
 /* Main Style */
 
+:root {
+    --main-color: #{$main-color};
+    --main-bg: #{$main-bg};
+    --primary: #{$primary};
+    --secondary: #{$secondary};
+    --success: #{$success};
+    --info: #{$info};
+    --warning: #{$warning};
+    --danger: #{$danger};
+    --light: #{$light};
+    --dark: #{$dark};
+    --border-radius: #{$border-radius};
+}
 
 body {
     background-color: $main-bg;
