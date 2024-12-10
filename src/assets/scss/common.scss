@@ -46,15 +46,6 @@ body {
         font-size: $font-size-large;
     }
 
-    a {
-        font-weight: bold;
-        color: $primary;
-
-        &.router-link-exact-active {
-            color: $secondary;
-        }
-    }
-
     .help {
         font-size: $font-size-small;
         font-style: italic;
@@ -69,6 +60,7 @@ body {
         margin-top: 20px;
     }
 
+    @import 'nav';
     @import 'button';
     @import 'alert';
     @import 'select';
