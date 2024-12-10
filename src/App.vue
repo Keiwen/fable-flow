@@ -5,6 +5,14 @@ import { computed } from 'vue'
 const { flashMessages } = useFlashMessages()
 const messages = computed(() => flashMessages.value)
 
+const computeAlertClass = (type) => {
+  switch (type) {
+    case 'error': return 'alert-danger'
+    default:
+      return 'alert-' + type
+  }
+}
+
 </script>
 
 <template>
@@ -15,10 +23,10 @@ const messages = computed(() => flashMessages.value)
     <router-link to="/settings">Settings</router-link>
   </nav>
   <router-view/>
-  <div>
-    <ul>
-      <li v-for="(message, msgIndex) in messages" :key="msgIndex">{{ message.message }}</li>
-    </ul>
+  <div class="message-container">
+    <div v-for="(message, msgIndex) in messages" :key="msgIndex" class="alert" :class="computeAlertClass(message.type)" >
+      {{ message.message }}
+    </div>
   </div>
 </template>
 
