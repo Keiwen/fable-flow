@@ -2,7 +2,7 @@
 import { useFlashMessages } from '@/composables/flashMessages'
 import { computed } from 'vue'
 
-const { flashMessages } = useFlashMessages()
+const { flashMessages, clearMessage } = useFlashMessages()
 const messages = computed(() => flashMessages.value)
 
 const computeAlertClass = (type) => {
@@ -23,7 +23,7 @@ const computeAlertClass = (type) => {
     <router-link to="/settings">Settings</router-link>
   </nav>
   <div class="message-container">
-    <div v-for="(message, msgIndex) in messages" :key="msgIndex" class="alert" :class="computeAlertClass(message.type)" >
+    <div v-for="(message, msgIndex) in messages" :key="msgIndex" class="alert" :class="computeAlertClass(message.type)" @click="clearMessage(msgIndex)">
       {{ message.message }}
     </div>
   </div>
