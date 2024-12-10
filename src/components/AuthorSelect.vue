@@ -25,17 +25,12 @@ onMounted(async () => {
 
 <template>
   <div>
-    <p>
-      Current author is set to {{ selectedAuthor }}
-    </p>
-    <p>
-      Select author:
-      <select v-model="selectedAuthor">
-        <option v-for="author in authors" :key="author" :value="author">
-          {{ author }}
-        </option>
-      </select>
-    </p>
+    <label for="authorSelect">Author:</label>
+    <select id="authorSelect" v-model="selectedAuthor">
+      <option v-for="author in authors" :key="author" :value="author">
+        {{ author }}
+      </option>
+    </select>
   </div>
 </template>
 
