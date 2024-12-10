@@ -26,4 +26,9 @@ body {
   bottom: 0;
   left: 0;
   z-index: 10;
+
+  .alert {
+    margin-right: $margin-side;
+    margin-left: $margin-side;
+  }
 }
