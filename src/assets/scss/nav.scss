@@ -1,12 +1,15 @@
 nav {
   >.nav-item {
     display: inline;
-    margin-right: 10px;
-    &:not(:last-child):after {
-      margin-left: 10px;
-      content: "|";
+    &:not(:last-child) {
+      margin-right: 10px;
+      &:after {
+        margin-left: 10px;
+        content: "|";
+      }
     }
   }
+
   a {
     font-weight: bold;
     color: $primary;
