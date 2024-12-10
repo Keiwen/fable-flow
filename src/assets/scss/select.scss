@@ -14,8 +14,13 @@ select {
   &:focus {
     outline: none;
   }
+  &.empty-select {
+    font-style: italic;
+    color: rgba($main-color, 0.5);
+  }
   option {
     color: $main-color;
     background-color: $main-bg;
+    font-style: normal;
   }
 }

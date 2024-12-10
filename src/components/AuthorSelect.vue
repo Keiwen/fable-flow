@@ -26,7 +26,8 @@ onMounted(async () => {
 <template>
   <div>
     <label for="authorSelect">Author:</label>
-    <select id="authorSelect" v-model="selectedAuthor">
+    <select id="authorSelect" v-model="selectedAuthor" :class="selectedAuthor ? '' : 'empty-select'">
+      <option value="" class="placeholder" disabled selected hidden>Select author...</option>
       <option v-for="author in authors" :key="author" :value="author">
         {{ author }}
       </option>

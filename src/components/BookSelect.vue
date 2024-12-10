@@ -31,7 +31,8 @@ onMounted(async () => {
 <template>
   <div>
     <label for="bookSelect">Book:</label>
-    <select id="bookSelect" v-model="selectedBook">
+    <select id="bookSelect" v-model="selectedBook" :class="selectedBook ? '' : 'empty-select'">
+      <option value="" class="placeholder" disabled selected hidden>Select book...</option>
       <option v-for="book in books" :key="book" :value="book">
         {{ book }}
       </option>
