@@ -1,0 +1,10 @@
+@-webkit-keyframes pulse-in {
+  50% {
+    @include transform(scale(0.9));
+  }
+}
+@keyframes pulse-in {
+  50% {
+    @include transform(scale(0.9));
+  }
+}

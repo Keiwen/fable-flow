@@ -18,6 +18,17 @@
   transform: $transforms;
 }
 
+@mixin animation($name, $duration, $timingFunction, $iterationCount) {
+  -webkit-animation-name: $name;
+  animation-name: $name;
+  -webkit-animation-duration: $duration;
+  animation-duration: $duration;
+  -webkit-animation-timing-function: $timingFunction;
+  animation-timing-function: $timingFunction;
+  -webkit-animation-iteration-count: $iterationCount;
+  animation-iteration-count: $iterationCount;
+}
+
 //radial gradient
 @mixin radialGradient($centerColor, $borderColor) {
   background: -moz-radial-gradient(center, ellipse cover, $centerColor 0%, $borderColor 100%);
