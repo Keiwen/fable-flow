@@ -22,12 +22,12 @@ const computeAlertClass = (type) => {
     <router-link to="/">Chapter</router-link> |
     <router-link to="/settings">Settings</router-link>
   </nav>
-  <router-view/>
   <div class="message-container">
     <div v-for="(message, msgIndex) in messages" :key="msgIndex" class="alert" :class="computeAlertClass(message.type)" >
       {{ message.message }}
     </div>
   </div>
+  <router-view class="content"/>
 </template>
 
 <style lang="scss">
