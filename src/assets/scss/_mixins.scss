@@ -29,6 +29,24 @@
   animation-iteration-count: $iterationCount;
 }
 
+@mixin keyframes($name) {
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @-o-keyframes #{$name} {
+    @content;
+  }
+  @-webkit-keyframes #{$name} {
+    @content
+  }
+  @keyframes #{$name} {
+    @content
+  }
+}
+
 //radial gradient
 @mixin radialGradient($centerColor, $borderColor) {
   background: -moz-radial-gradient(center, ellipse cover, $centerColor 0%, $borderColor 100%);
@@ -45,4 +63,11 @@
     color: $main-bg;
     background: $bgColor;
   }
+}
+
+//container color
+@mixin containerColor($containerColor) {
+  border: 1px solid $containerColor;
+  color: $containerColor;
+  background-color: rgba($containerColor, 0.25);
 }

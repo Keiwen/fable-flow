@@ -1,10 +1,98 @@
-@-webkit-keyframes pulse-in {
+@include keyframes(pulse-in) {
   50% {
     @include transform(scale(0.9));
   }
 }
-@keyframes pulse-in {
-  50% {
+
+@include keyframes(puff-in) {
+  0% {
+    opacity: 0;
+    filter: blur(2px);
+    @include transform(scale(2));
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    @include transform(scale(1));
+  }
+}
+
+@include keyframes(puff-out) {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    @include transform(scale(1));
+  }
+  100% {
+    opacity: 0;
+    filter: blur(2px);
+    @include transform(scale(2));
+  }
+}
+
+@include keyframes(grow-in) {
+  0% {
+    opacity: 0;
+    @include transform(scale(0));
+  }
+  90% {
+    opacity: 1;
     @include transform(scale(0.9));
+  }
+  100% {
+    opacity: 1;
+    @include transform(scale(1));
+  }
+}
+
+@include keyframes(grow-out) {
+  0% {
+    opacity: 1;
+    @include transform(scale(1));
+  }
+  10% {
+    opacity: 1;
+    @include transform(scale(0.9));
+  }
+  100% {
+    opacity: 0;
+    @include transform(scale(0));
+  }
+}
+
+@include keyframes(collapse-in) {
+  0% {
+    opacity: 0;
+    @include transform(scale(0) rotateY(180deg));
+  }
+  100% {
+    opacity: 1;
+    @include transform(scale(1) rotateY(0deg));
+  }
+}
+
+@include keyframes(collapse-out) {
+  0% {
+    opacity: 1;
+    @include transform(scale(1) rotateY(0deg));
+  }
+  100% {
+    opacity: 0;
+    @include transform(scale(0) rotateY(180deg));
+  }
+}
+
+@include keyframes(ting-in-down) {
+  0% {
+    opacity: 0;
+    @include transform(scale(0) translateY(900%));
+  }
+  70%, 90% {
+    opacity: 1;
+    @include transform(scale(1.1) translateY(0));
+  }
+  50%, 80%, 100% {
+    opacity: 1;
+    @include transform(scale(1) translateY(0));
   }
 }
