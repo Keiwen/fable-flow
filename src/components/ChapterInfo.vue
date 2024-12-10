@@ -65,7 +65,7 @@ const playChapter = async (chapterHandle) => {
 
 <template>
   <div>
-    <div class="audioPlayer">
+    <div class="audio-player">
       <audio controls ref="audioPlayer">
         <source :src="chapterSrc">
       </audio>
