@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Play</h1>
     <chapter-info></chapter-info>
   </div>
 </template>
