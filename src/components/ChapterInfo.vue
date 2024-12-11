@@ -148,7 +148,7 @@ onMounted(async () => {
       {{ currentChapter ? currentChapter.name : '' }}
     </p>
     <p>
-      <button class="btn-info" @click="nextChapter">Next chapter</button>
+      <button class="btn-primary" @click="nextChapter">Next chapter</button>
       <button class="btn-warning" @click="startBook">Start book over</button>
     </p>
   </div>

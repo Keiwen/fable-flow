@@ -1,5 +1,6 @@
 
 button,.btn {
+  display: inline-block;
   background-color: transparent;
   color: $light;
   border: 1px solid $light;
@@ -12,6 +13,7 @@ button,.btn {
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   user-select: none;
   margin: 5px;
+  cursor: pointer;
   @include backgroundTransition($light);
   &.btn-primary {
     color: $primary;
