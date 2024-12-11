@@ -3,12 +3,30 @@ Audio player dedicated to read local audiobooks.
 
 * When you may not have any network to stream your audiobook
 * When you have a digital copy on your device
-* When you are tired of classic media player mainly designed for songs (thus short audio files)
+* When you are tired of classic media player mainly designed for songs (thus short audio files) or filled with ads
 
 Here come Fable Flow!
 
+![Fable Flow logo](https://raw.githubusercontent.com/Keiwen/fable-flow/master/src/assets/img/logo.png)
+
 This application will ask you to choose a directory on your device
 that will be read (**no write action**).
+
+>## Important compatibility note
+> Fable Flow require, as first step, to select a directory from the user's device
+>
+> Currently, **no mobile browser** supports this requirement.
+>At this date (2024-12-12), 
+> only Chrome 132 is known to potentially support it, 
+> with a release date planed on 2025-01-08.
+>
+> Regarding PC browser, Fable Flow should be compatible with
+> Chrome, Edge and Opera.
+> The requirement is not supported by Firefox or Safari.
+>
+> You can refer to
+> [showDirectoryPicker browser compatibility](https://developer.mozilla.org/en-US/docs/Web/API/Window/showDirectoryPicker#browser_compatibility)
+> for more details
 
 ## Usage
 ### Setup
