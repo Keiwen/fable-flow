@@ -1,0 +1,174 @@
+.custom-player-container {
+  display: grid;
+  width: var(--audio-player-width);
+  height: var(--audio-player-button-size);
+  grid-template-columns: var(--audio-player-button-size) auto var(--audio-player-button-size);
+  grid-template-rows: calc(var(--audio-player-button-size) / 2) calc(var(--audio-player-button-size) / 2);
+  margin: auto;
+
+  .play-button {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    border-radius: 50%;
+    cursor: pointer;
+    .play-border {
+      &.play-border-dotted {
+        opacity: 0;
+        stroke-dasharray: 4,5;
+        stroke-width: 1px;
+        transform-origin: 50% 50%;
+        @include animation(spin, 4s, linear, infinite);
+        @include doubleTransition(opacity 1s ease, stroke-width 1s ease);
+      }
+      &.play-border-solid {
+        stroke-dashoffset: 0;
+        stroke-dashArray: 300;
+        stroke-width: 6px;
+        @include doubleTransition(stroke-dashoffset 1s ease, opacity 1s ease);
+      }
+    }
+
+    .play-icon {
+      transform-origin: 50% 50%;
+      @include transition(transform 200ms ease-out);
+    }
+    .pause-icon {
+      transform-origin: 50% 50%;
+      @include transition(transform 200ms ease-out);
+      @include transform(scale(0));
+    }
+
+    &.play-button-playing {
+      .play-border-dotted {
+        stroke-width: 4px;
+        opacity: 1;
+      }
+      .play-border-solid {
+        opacity: 0;
+        stroke-dashoffset: 300;
+      }
+      .play-icon {
+        @include transform(scale(0));
+      }
+      .pause-icon {
+        @include transform(scale(1));
+      }
+    }
+  }
+
+  .rewind-button {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .custom-player-time {
+    grid-column: 2;
+    grid-row: 2;
+    text-align: center;
+    color: var(--light);
+    padding-top: 10px;
+  }
+
+  .custom-player-timeline {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 0 10px;
+
+    input[type="range"] {
+      width: 100%;
+      cursor: pointer;
+      -webkit-appearance: none;
+      height: 25px;
+      background-color: var(--main-bg);
+      padding: 5px 0;
+      border-radius: 25px;
+      position: relative;
+
+      //CHROME
+      &::-webkit-slider-runnable-track {
+        height: var(--timeline-slider-track-height);
+        background: rgba(0, 0, 0, 0.3);
+      }
+      &::-webkit-slider-thumb {
+        position: relative;
+        -webkit-appearance: none;
+        box-sizing: content-box;
+        height: var(--timeline-slider-thumb-size);
+        width: var(--timeline-slider-thumb-size);
+        border-radius: 50%;
+        background-color: var(--secondary);
+        border: 1px solid var(--light);
+        margin: var(--timeline-slider-thumb-margin) 0 0 0;
+      }
+      &:active::-webkit-slider-thumb {
+        transform: scale(1.2);
+      }
+      // next element is used to display timeline before thumb
+      // however, we need to compute its width and dynamically adjust it
+      // not shown on firefox, replaced by range-progress pseudo element
+      &::before {
+        position: absolute;
+        content: "";
+        top: var(--timeline-slider-track-margin);
+        left: 0;
+        width: var(--custom-player-percent-progress);
+        height: var(--timeline-slider-track-height);
+        background-color: var(--light);
+      }
+
+      //FIREFOX
+      &::-moz-range-track {
+        height: var(--timeline-slider-track-height);
+        background: rgba(0, 0, 0, 0.3);
+      }
+      &::-moz-range-progress {
+        background-color: var(--light);
+      }
+      &::-moz-range-thumb {
+        position: relative;
+        -webkit-appearance: none;
+        box-sizing: content-box;
+        height: var(--timeline-slider-thumb-size);
+        width: var(--timeline-slider-thumb-size);
+        border-radius: 50%;
+        background-color: var(--secondary);
+        border: 1px solid var(--light);
+        margin: var(--timeline-slider-thumb-margin) 0 0 0;
+      }
+      &:active::-moz-range-thumb {
+        transform: scale(1.2);
+      }
+
+      //EDGE
+      &::-ms-track {
+        width: 100%;
+        height: var(--timeline-slider-track-height);
+        background: transparent;
+        border: solid transparent;
+        color: transparent;
+      }
+      &::-ms-fill-lower {
+        background-color: var(--light);
+      }
+      &::-ms-fill-upper {
+        background: rgba(0, 0, 0, 0.3);
+      }
+      &::-ms-thumb {
+        position: relative;
+        -webkit-appearance: none;
+        box-sizing: content-box;
+        height: var(--timeline-slider-thumb-size);
+        width: var(--timeline-slider-thumb-size);
+        border-radius: 50%;
+        background-color: var(--secondary);
+        border: 1px solid var(--light);
+        margin: var(--timeline-slider-thumb-margin) 0 0 0;
+      }
+      &:active::-ms-thumb {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
