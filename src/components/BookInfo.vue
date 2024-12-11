@@ -4,20 +4,20 @@ import { useStore } from 'vuex'
 import { useLibraryLoader } from '@/composables/libraryLoader'
 
 const store = useStore()
-const { getChapterFromBook } = useLibraryLoader()
+const { getChaptersFromBook } = useLibraryLoader()
 
 // computed
 const currentAuthor = computed(() => store.getters.author)
 const currentBook = computed(() => store.getters.book)
-const currentChapterIndex = computed(() => store.getters.chapterIndex)
-const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, currentBook.value, currentChapterIndex.value))
+const chapters = computed(() => getChaptersFromBook(currentAuthor.value, currentBook.value))
+const chapterCount = computed(() => chapters.value.length)
 
 </script>
 
 <template>
   <div>
     <p>
-      {{ currentChapter ? currentChapter.name : '' }}
+      {{ currentAuthor }}: {{ currentBook }} ({{ chapterCount }} chapters)
     </p>
   </div>
 </template>
