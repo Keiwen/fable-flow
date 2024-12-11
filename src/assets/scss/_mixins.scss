@@ -9,6 +9,7 @@
   transition: $transition;
 }
 
+// double transition: setting transition1 then transition2 may not result in the same behavior than setting both
 @mixin doubleTransition($transition1, $transition2) {
   -webkit-transition: $transition1, $transition2;
   -moz-transition: $transition1, $transition2;
