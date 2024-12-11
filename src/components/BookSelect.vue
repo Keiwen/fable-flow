@@ -2,9 +2,11 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useLibraryLoader } from '@/composables/libraryLoader'
+import { useRouter } from 'vue-router'
 
 const store = useStore()
 const { getBooksFromAuthor } = useLibraryLoader()
+const router = useRouter()
 
 // data
 const selectedBook = ref('')
@@ -20,7 +22,8 @@ watch(currentAuthor, async (newValue) => {
 })
 watch(selectedBook, async (newValue) => {
   if (!newValue || newValue === store.getters.book) return
-  store.dispatch('selectBook', newValue)
+  await store.dispatch('selectBook', newValue)
+  router.push({ name: 'chapter' })
 })
 
 onMounted(async () => {
