@@ -24,6 +24,12 @@ $font-size-small: 0.9rem;
     --font-size-default: #{$font-size-default};
     --font-size-large: #{$font-size-large};
     --font-size-small: #{$font-size-small};
+    --audio-player-button-size: 70px;
+    --audio-player-width: 320px;
+    --timeline-slider-track-height: 5px;
+    --timeline-slider-track-margin: 15px;
+    --timeline-slider-thumb-size: 18px;
+    --timeline-slider-thumb-margin: -7px;
 }
 
 body {
@@ -64,5 +70,6 @@ body {
     @import 'button';
     @import 'alert';
     @import 'select';
+    @import 'audioPlayer';
 
 }
