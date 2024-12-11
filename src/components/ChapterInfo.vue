@@ -102,8 +102,17 @@ const audioPlayerError = (e) => {
 }
 
 const audioPlayerLoaded = (e) => {
-  duration.value = audioPlayer.value.duration
-  audioPlayer.value.currentTime = initTrackTime.value
+  if (audioPlayer.value) {
+    duration.value = audioPlayer.value.duration
+    audioPlayer.value.currentTime = initTrackTime.value
+  }
+}
+
+const trackTimeBack = (backTime) => {
+  if (audioPlayer.value) {
+    audioPlayer.value.currentTime -= backTime
+    // if below 0, it is set to 0
+  }
 }
 
 watch(currentTime, (newValue, oldValue) => {
@@ -142,14 +151,18 @@ onMounted(async () => {
       </audio>
     </div>
     <p>
+      <button class="btn-secondary" @click="trackTimeBack(10)">-10 s</button>
+      <button class="btn-secondary" @click="trackTimeBack(60)">-1 min</button>
+    </p>
+    <p>
       {{ currentAuthor }}: {{ currentBook }} ({{ chapterCount }} chapters)
     </p>
     <p>
       {{ currentChapter ? currentChapter.name : '' }}
     </p>
     <p>
-      <button class="btn-primary" @click="nextChapter">Next chapter</button>
       <button class="btn-warning" @click="startBook">Start book over</button>
+      <button class="btn-primary" @click="nextChapter">Next chapter</button>
     </p>
   </div>
 </template>
