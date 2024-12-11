@@ -13,12 +13,14 @@ export default createStore({
     library: '',
     author: '',
     book: '',
-    chapterIndex: 0
+    chapterIndex: 0,
+    trackTime: 0
   },
   getters: {
     author: (state) => state.author,
     book: (state) => state.book,
-    chapterIndex: (state) => state.chapterIndex
+    chapterIndex: (state) => state.chapterIndex,
+    trackTime: (state) => state.trackTime
   },
   mutations: {
     setLibrary (state, library) {
@@ -33,10 +35,14 @@ export default createStore({
     setChapterIndex (state, index) {
       state.chapterIndex = index
     },
+    setTrackTime (state, time) {
+      state.trackTime = time
+    },
     resetSelection (state) {
       state.author = ''
       state.book = ''
       state.chapterIndex = 0
+      state.trackTime = 0
     }
   },
   actions: {
@@ -53,13 +59,19 @@ export default createStore({
       commit('setBook', '')
       commit('setChapterIndex', 0)
       commit('setAuthor', author)
+      commit('setTrackTime', 0)
     },
     selectBook ({ commit }, book) {
       commit('setChapterIndex', 0)
       commit('setBook', book)
+      commit('setTrackTime', 0)
     },
     selectChapterIndex ({ commit }, index) {
       commit('setChapterIndex', index)
+      commit('setTrackTime', 0)
+    },
+    updateTrackTime ({ commit }, time) {
+      commit('setTrackTime', time)
     }
   },
   modules: {

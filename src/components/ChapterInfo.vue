@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useLibraryLoader } from '@/composables/libraryLoader'
 import { useFlashMessages } from '@/composables/flashMessages'
@@ -11,6 +11,11 @@ const { addWarningMessage, addErrorMessage } = useFlashMessages()
 // data
 const audioPlayer = ref(null)
 const chapterSrc = ref(null)
+const currentTime = ref(0)
+const currentProgress = ref(0)
+const playing = ref(false)
+const duration = ref(0)
+const initTrackTime = ref(0)
 
 // computed
 const currentAuthor = computed(() => store.getters.author)
@@ -22,11 +27,8 @@ const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, cu
 
 // methods
 const startBook = async () => {
+  await stopAudio()
   await store.dispatch('selectChapterIndex', 0)
-  playChapter(currentChapter.value)
-}
-
-const resumeBook = () => {
   playChapter(currentChapter.value)
 }
 
@@ -34,6 +36,7 @@ const nextChapter = async () => {
   const nextIndex = currentChapterIndex.value + 1
   const nextChapter = getChapterFromBook(currentAuthor.value, currentBook.value, nextIndex)
   if (nextChapter) {
+    await stopAudio()
     store.dispatch('selectChapterIndex', nextIndex)
     playChapter(nextChapter)
   } else {
@@ -41,7 +44,7 @@ const nextChapter = async () => {
   }
 }
 
-const playChapter = async (chapterHandle) => {
+const playChapter = async (chapterHandle, autoPlay = true) => {
   if (!chapterHandle) {
     addErrorMessage('No chapter found')
     return
@@ -54,13 +57,81 @@ const playChapter = async (chapterHandle) => {
     }
     chapterSrc.value = URL.createObjectURL(audioFile)
     // reload
-    audioPlayer.value.load()
-    audioPlayer.value.play()
+    await audioPlayer.value.load()
+    if (autoPlay) {
+      await audioPlayer.value.play()
+      playing.value = true
+    }
   } catch (e) {
     addErrorMessage('Cannot start audio file')
     console.error(e)
   }
 }
+
+const stopAudio = async () => {
+  await audioPlayer.value.pause()
+  currentTime.value = 0
+  currentProgress.value = 0
+  playing.value = false
+}
+
+const audioPlayerTimeUpdate = (e) => {
+  // check that audio player is still there, we may have this event called on nav while audio player became null
+  if (audioPlayer.value) {
+    currentTime.value = Math.floor(audioPlayer.value.currentTime)
+    currentProgress.value = Math.round((audioPlayer.value.currentTime / audioPlayer.value.duration) * 100)
+  }
+}
+
+const audioPlayerPause = (e) => {
+  playing.value = false
+}
+
+const audioPlayerPlay = (e) => {
+  playing.value = true
+}
+
+const audioPlayerEnded = (e) => {
+  playing.value = false
+}
+
+const audioPlayerError = (e) => {
+  playing.value = false
+  addErrorMessage('An error occurred on audio player')
+  console.error(e)
+}
+
+const audioPlayerLoaded = (e) => {
+  duration.value = audioPlayer.value.duration
+  audioPlayer.value.currentTime = initTrackTime.value
+}
+
+watch(currentTime, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    store.dispatch('updateTrackTime', newValue)
+  }
+})
+
+onMounted(async () => {
+  if (audioPlayer.value) {
+    audioPlayer.value.addEventListener('timeupdate', audioPlayerTimeUpdate)
+    audioPlayer.value.addEventListener('loadedmetadata', audioPlayerLoaded)
+    audioPlayer.value.addEventListener('pause', audioPlayerPause)
+    audioPlayer.value.addEventListener('play', audioPlayerPlay)
+    audioPlayer.value.addEventListener('ended', audioPlayerEnded)
+    audioPlayer.value.addEventListener('error', audioPlayerError)
+    if (currentChapter.value) {
+      await playChapter(currentChapter.value, false)
+      const storedTrackTime = store.getters.trackTime
+      if (storedTrackTime) {
+        initTrackTime.value = storedTrackTime
+      }
+    }
+  } else {
+    addErrorMessage('Cannot initialize audio player')
+  }
+})
+
 </script>
 
 <template>
@@ -74,14 +145,11 @@ const playChapter = async (chapterHandle) => {
       {{ currentAuthor }}: {{ currentBook }} ({{ chapterCount }} chapters)
     </p>
     <p>
-      <button class="btn-warning" @click="startBook">Start book over</button>
-      <button class="btn-success" @click="resumeBook">Resume book</button>
-    </p>
-    <p>
       {{ currentChapter ? currentChapter.name : '' }}
     </p>
     <p>
       <button class="btn-info" @click="nextChapter">Next chapter</button>
+      <button class="btn-warning" @click="startBook">Start book over</button>
     </p>
   </div>
 </template>
