@@ -55,8 +55,8 @@
 }
 
 //background transition
-@mixin backgroundTransition($bgColor) {
-  background-color: $main-bg;
+@mixin backgroundTransition($bgColor, $baseBgColor: '') {
+  background-color: $baseBgColor;
   transform-origin: 50%;
   @include transition(all 0.5s ease-in-out);
   &:hover {

@@ -14,35 +14,35 @@ button,.btn {
   user-select: none;
   margin: 5px;
   cursor: pointer;
-  @include backgroundTransition($light);
+  @include backgroundTransition($light, $main-bg);
   &.btn-primary {
     color: $primary;
     border-color: $primary;
-    @include backgroundTransition($primary);
+    @include backgroundTransition($primary, $main-bg);
   }
   &.btn-secondary {
     color: $secondary;
     border-color: $secondary;
-    @include backgroundTransition($secondary);
+    @include backgroundTransition($secondary, $main-bg);
   }
   &.btn-success {
     color: $success;
     border-color: $success;
-    @include backgroundTransition($success);
+    @include backgroundTransition($success, $main-bg);
   }
   &.btn-info {
     color: $info;
     border-color: $info;
-    @include backgroundTransition($info);
+    @include backgroundTransition($info, $main-bg);
   }
   &.btn-warning {
     color: $warning;
     border-color: $warning;
-    @include backgroundTransition($warning);
+    @include backgroundTransition($warning, $main-bg);
   }
   &.btn-danger {
     color: $danger;
     border-color: $danger;
-    @include backgroundTransition($danger);
+    @include backgroundTransition($danger, $main-bg);
   }
 }
