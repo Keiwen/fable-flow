@@ -3,6 +3,10 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useLibraryLoader } from '@/composables/libraryLoader'
 import { useFlashMessages } from '@/composables/flashMessages'
+import AudioPlayerPlayButton from '@/components/AudioPlayerPlayButton'
+import AudioPlayerRewindButton from '@/components/AudioPlayerRewindButton'
+import AudioPlayerTimeview from '@/components/AudioPlayerTimeview'
+import AudioPlayerTimeline from '@/components/AudioPlayerTimeline'
 
 const store = useStore()
 const { getChapterFromBook } = useLibraryLoader()
@@ -113,6 +117,17 @@ const trackTimeBack = (backTime) => {
   }
 }
 
+const togglePlay = () => {
+  if (audioPlayer.value) {
+    if (audioPlayer.value.paused) {
+      audioPlayer.value.play()
+    } else {
+      audioPlayer.value.pause()
+    }
+    playing.value = !playing.value
+  }
+}
+
 watch(currentTime, (newValue, oldValue) => {
   if (newValue !== oldValue) {
     store.dispatch('updateTrackTime', newValue)
@@ -148,17 +163,21 @@ onMounted(async () => {
         <source :src="chapterSrc">
       </audio>
     </div>
-    <p>
-      <button class="btn-secondary" @click="trackTimeBack(10)">-10 s</button>
-      <button class="btn-secondary" @click="trackTimeBack(60)">-1 min</button>
-    </p>
+    <div class="custom-player-container">
+      <audio-player-play-button :playing="playing" color="var(--primary)" @click-play="togglePlay"></audio-player-play-button>
+      <audio-player-timeline :percent-progress="currentProgress"></audio-player-timeline>
+      <audio-player-timeview :duration="duration" :current-time="currentTime"></audio-player-timeview>
+      <audio-player-rewind-button color="var(--primary)" @click-rewind="trackTimeBack(10)"></audio-player-rewind-button>
+    </div>
     <p>
       <button class="btn-warning" @click="startBook">Start book over</button>
-      <button class="btn-primary" @click="nextChapter">Next chapter</button>
+      <button class="btn-secondary" @click="nextChapter">Next chapter</button>
     </p>
   </div>
 </template>
 
 <style scoped lang="scss">
-
+  .audio-player {
+    display: none;
+  }
 </style>
