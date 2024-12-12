@@ -1,7 +1,7 @@
 <script setup>
-import { useStore } from 'vuex'
+import { useDisplayFilters } from '@/composables/displayFilters'
 
-const store = useStore()
+const { time } = useDisplayFilters()
 
 defineProps({
   duration: { type: Number, default: 0 },
@@ -9,7 +9,7 @@ defineProps({
 })
 
 const getDisplayTime = (timeInSecond) => {
-  return store.getters.getDisplayTime(timeInSecond)
+  return time(timeInSecond)
 }
 
 </script>
