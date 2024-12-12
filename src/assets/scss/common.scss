@@ -8,6 +8,7 @@ $font-size-default: 1.1rem;
 $font-size-large: 1.2rem;
 $font-size-small: 0.9rem;
 $audio-player-width: 320px;
+$audio-player-button-size: 80px;
 $screen-width-small: 740px;
 
 :root {
@@ -26,7 +27,7 @@ $screen-width-small: 740px;
     --font-size-default: #{$font-size-default};
     --font-size-large: #{$font-size-large};
     --font-size-small: #{$font-size-small};
-    --audio-player-button-size: 70px;
+    --audio-player-button-size: #{$audio-player-button-size};
     --audio-player-width: #{$audio-player-width};
     --timeline-slider-track-height: 5px;
     --timeline-slider-track-margin: 15px;
