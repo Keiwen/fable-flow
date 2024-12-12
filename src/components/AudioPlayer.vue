@@ -117,6 +117,12 @@ const trackTimeBack = (backTime) => {
   }
 }
 
+const changeProgress = (percentProgress) => {
+  if (audioPlayer.value) {
+    audioPlayer.value.currentTime = (parseInt(percentProgress) / 100) * audioPlayer.value.duration
+  }
+}
+
 const togglePlay = () => {
   if (audioPlayer.value) {
     if (audioPlayer.value.paused) {
@@ -169,7 +175,7 @@ onMounted(async () => {
       </div>
       <div class="custom-player-container">
         <audio-player-play-button :playing="playing" color="var(--primary)" @click-play="togglePlay"></audio-player-play-button>
-        <audio-player-timeline :percent-progress="currentProgress"></audio-player-timeline>
+        <audio-player-timeline :percent-progress="currentProgress" @change-progress="changeProgress"></audio-player-timeline>
         <audio-player-timeview :duration="duration" :current-time="currentTime"></audio-player-timeview>
         <audio-player-rewind-button color="var(--primary)" @click-rewind="trackTimeBack(10)"></audio-player-rewind-button>
       </div>
