@@ -64,3 +64,6 @@ This application cover a real need of real people,
 but it is also a first experiment in VueJS 3 framework.
 If you are a senior Node/VueJS developer, be kind,
 I promise I tried to make it clean ;)
+
+## Samples
+![Chapter play screenshot](https://raw.githubusercontent.com/Keiwen/fable-flow/master/samples/play.png)
