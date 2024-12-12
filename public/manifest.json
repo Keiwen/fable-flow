@@ -5,8 +5,8 @@
   "start_url": "/fable-flow/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#001d3d",
-  "theme_color": "#ffc107",
+  "background_color": "#0F1721",
+  "theme_color": "#C5FDFE",
   "icons": [
     {
       "src": "/fable-flow/img/icons/icon-192x192.png",
