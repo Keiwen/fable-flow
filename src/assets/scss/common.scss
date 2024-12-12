@@ -7,6 +7,8 @@ $margin-side: 10px;
 $font-size-default: 1.1rem;
 $font-size-large: 1.2rem;
 $font-size-small: 0.9rem;
+$audio-player-width: 320px;
+$screen-width-small: 740px;
 
 :root {
     --main-color: #{$main-color};
@@ -25,7 +27,7 @@ $font-size-small: 0.9rem;
     --font-size-large: #{$font-size-large};
     --font-size-small: #{$font-size-small};
     --audio-player-button-size: 70px;
-    --audio-player-width: 320px;
+    --audio-player-width: #{$audio-player-width};
     --timeline-slider-track-height: 5px;
     --timeline-slider-track-margin: 15px;
     --timeline-slider-thumb-size: 18px;
@@ -64,6 +66,31 @@ body {
 
     .audio-player {
         margin-top: 20px;
+    }
+
+    .chapter-control-container {
+        display: grid;
+        grid-template-columns: auto calc($audio-player-width + 40px) auto;
+
+        @media (width < $screen-width-small) {
+            grid-template-columns: auto auto;
+            grid-template-rows: auto auto;
+            >div:nth-child(1) {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            >div:nth-child(2) {
+                grid-column: 1 / span 2;
+                grid-row: 1;
+                margin-bottom: 10px;
+            }
+
+            >div:nth-child(3) {
+                grid-column: 2;
+                grid-row: 2;
+            }
+        }
     }
 
     @import 'nav';

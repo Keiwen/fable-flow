@@ -163,16 +163,20 @@ onMounted(async () => {
         <source :src="chapterSrc">
       </audio>
     </div>
-    <div class="custom-player-container">
-      <audio-player-play-button :playing="playing" color="var(--primary)" @click-play="togglePlay"></audio-player-play-button>
-      <audio-player-timeline :percent-progress="currentProgress"></audio-player-timeline>
-      <audio-player-timeview :duration="duration" :current-time="currentTime"></audio-player-timeview>
-      <audio-player-rewind-button color="var(--primary)" @click-rewind="trackTimeBack(10)"></audio-player-rewind-button>
+    <div class="chapter-control-container">
+      <div>
+        <button class="btn-warning" @click="startBook">Start book over</button>
+      </div>
+      <div class="custom-player-container">
+        <audio-player-play-button :playing="playing" color="var(--primary)" @click-play="togglePlay"></audio-player-play-button>
+        <audio-player-timeline :percent-progress="currentProgress"></audio-player-timeline>
+        <audio-player-timeview :duration="duration" :current-time="currentTime"></audio-player-timeview>
+        <audio-player-rewind-button color="var(--primary)" @click-rewind="trackTimeBack(10)"></audio-player-rewind-button>
+      </div>
+      <div>
+        <button class="btn-secondary" @click="nextChapter">Next chapter</button>
+      </div>
     </div>
-    <p>
-      <button class="btn-warning" @click="startBook">Start book over</button>
-      <button class="btn-secondary" @click="nextChapter">Next chapter</button>
-    </p>
   </div>
 </template>
 
