@@ -29,18 +29,20 @@ const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, cu
 
 // methods
 const startBook = async () => {
+  initTrackTime.value = 0
   await stopAudio()
   await store.dispatch('selectChapterIndex', 0)
   playChapter(currentChapter.value)
 }
 
 const nextChapter = async () => {
+  initTrackTime.value = 0
   const nextIndex = currentChapterIndex.value + 1
   const nextChapter = getChapterFromBook(currentAuthor.value, currentBook.value, nextIndex)
   if (nextChapter) {
     await stopAudio()
-    store.dispatch('selectChapterIndex', nextIndex)
-    playChapter(nextChapter)
+    await store.dispatch('selectChapterIndex', nextIndex)
+    await playChapter(nextChapter)
   } else {
     addWarningMessage('This is the last chapter')
   }
