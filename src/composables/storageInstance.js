@@ -15,5 +15,15 @@ export function useStorageInstance () {
     return storageInstance.value
   }
 
-  return { getStorageInstance }
+  const getLibraryHandle = async () => {
+    const instance = getStorageInstance()
+    return await instance.getItem('libraryHandle')
+  }
+
+  const setLibraryHandle = async (value) => {
+    const instance = getStorageInstance()
+    return await instance.setItem('libraryHandle', value)
+  }
+
+  return { getStorageInstance, getLibraryHandle, setLibraryHandle }
 }
