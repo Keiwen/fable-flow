@@ -3,12 +3,16 @@ import { useLibraryLoader } from '@/composables/libraryLoader'
 
 export default function addNavigationGuards (router, store) {
   const { addWarningMessage, clearAllMessages } = useFlashMessages()
-  const { libraryHandle } = useLibraryLoader(store)
+  const { getLibraryHandle } = useLibraryLoader(store)
 
   router.beforeEach(async (to, from) => {
+    // first of all, as we are using async storage for store, wait for reload
+    await store.restored
+
     // first check if we have a library handle
     // beware that we are not currently heading to it
-    if (!libraryHandle.value && to.name !== 'setup') {
+    const libraryHandle = await getLibraryHandle()
+    if (!libraryHandle && to.name !== 'setup') {
       // persist message as we will redirect
       addWarningMessage('Library is not found, please define main directory', '', true)
       return { name: 'setup' }
