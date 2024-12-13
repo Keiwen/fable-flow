@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { FILE_EXTENSIONS_SUPPORTED } from '@/constants'
 import { useStore } from 'vuex'
 import { useFlashMessages } from '@/composables/flashMessages'
+import { useStorageInstance } from '@/composables/storageInstance'
 
 const libraryHandle = ref(null)
 const tracks = ref({})
@@ -10,6 +11,19 @@ export function useLibraryLoader (store) {
   let isLoading = false
   if (!store) store = useStore()
   const { addErrorMessage } = useFlashMessages()
+
+  const getLibraryHandle = async () => {
+    if (libraryHandle.value) {
+      return libraryHandle
+    }
+    // try to retrieve what was stored
+    libraryHandle.value = await useStorageInstance().getLibraryHandle()
+    if (libraryHandle.value) {
+      // if something was stored, reload library
+      await loadLibrary(libraryHandle.value)
+    }
+    return libraryHandle.value
+  }
 
   const listAuthors = async () => {
     const list = []
@@ -82,6 +96,7 @@ export function useLibraryLoader (store) {
       tracks.value[authorHandle.name] = authorBooks
     }
     await store.dispatch('selectLibrary', mainHandle.name)
+    await useStorageInstance().setLibraryHandle(mainHandle)
     isLoading = false
   }
 
@@ -108,6 +123,7 @@ export function useLibraryLoader (store) {
 
   return {
     libraryHandle,
+    getLibraryHandle,
     tracks,
     loadLibrary,
     getAuthorsList,
