@@ -1,11 +1,19 @@
 import { createStore } from 'vuex'
 import VuexPersistence from 'vuex-persist'
-import { LOCAL_STORAGE_KEY } from '@/constants'
+import { useStorageInstance } from '@/composables/storageInstance'
 
 // create vuex-persist instance
 const vuexPersist = new VuexPersistence({
-  storage: window.localStorage,
-  key: LOCAL_STORAGE_KEY
+  // option 1: use local storage
+  // storage: window.localStorage,
+  // key: PERSISTENCE_KEY
+  // option 2: use indexedDB. In this case, you have to set async storage
+  // Also in router, wait for restoration before each
+  // storage: localForage,
+  // option 3: use a specific instance for indexedDB
+  storage: useStorageInstance().getStorageInstance(),
+  asyncStorage: true,
+  key: 'store'
 })
 
 export default createStore({
