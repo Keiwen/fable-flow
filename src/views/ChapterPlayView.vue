@@ -1,3 +1,10 @@
+<script setup>
+// @ is an alias to /src
+import ChapterInfo from '@/components/ChapterInfo'
+import AudioPlayer from '@/components/AudioPlayer'
+import BookInfo from '@/components/BookInfo'
+</script>
+
 <template>
   <div>
     <h1>Chapter play</h1>
@@ -6,19 +13,3 @@
     <chapter-info></chapter-info>
   </div>
 </template>
-
-<script>
-// @ is an alias to /src
-import ChapterInfo from '@/components/ChapterInfo'
-import AudioPlayer from '@/components/AudioPlayer'
-import BookInfo from '@/components/BookInfo'
-
-export default {
-  name: 'ChapterPlayView',
-  components: {
-    BookInfo,
-    AudioPlayer,
-    ChapterInfo
-  }
-}
-</script>
