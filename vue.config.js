@@ -2,8 +2,8 @@ const webpack = require('webpack')
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
-  publicPath: process.env.VUE_APP_PUBLIC_PATH || '/',
-  outputDir: process.env.VUE_APP_OUTPUT_DIR || 'dist',
+  publicPath: './',
+  outputDir: (process.env.NODE_ENV === 'production') ? 'dist' : 'docs',
   pwa: {
     iconPaths: {
       favicon32: 'favicon.ico',
