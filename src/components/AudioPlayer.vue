@@ -158,8 +158,6 @@ onMounted(async () => {
         initTrackTime.value = storedTrackTime
       }
     }
-
-    audioPlayer.value.volume = 1
   } else {
     addErrorMessage('Cannot initialize audio player')
   }
@@ -193,5 +191,6 @@ onMounted(async () => {
 
 <style scoped lang="scss">
   audio {
+    display: none;
   }
 </style>
