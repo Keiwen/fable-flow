@@ -110,6 +110,7 @@ const audioPlayerLoaded = (e) => {
     duration.value = audioPlayer.value.duration
     audioPlayer.value.currentTime = initTrackTime.value
   }
+  console.log(e)
 }
 
 const trackTimeBack = (backTime) => {
@@ -157,6 +158,8 @@ onMounted(async () => {
         initTrackTime.value = storedTrackTime
       }
     }
+
+    audioPlayer.value.volume = 1
   } else {
     addErrorMessage('Cannot initialize audio player')
   }
@@ -189,7 +192,6 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
-  .audio-player {
-    display: none;
+  audio {
   }
 </style>
