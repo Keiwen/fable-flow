@@ -3,6 +3,7 @@
 import AudioTestRaw from '@/components/AudioTestRaw'
 import AudioTestLocal from '@/components/AudioTestLocal'
 import AudioTestRawChapter from '@/components/AudioTestRawChapter'
+import AudioTestUrl from '@/components/AudioTestUrl'
 </script>
 
 <template>
@@ -17,6 +18,9 @@ import AudioTestRawChapter from '@/components/AudioTestRawChapter'
 
     <h2>Raw chapter</h2>
     <audio-test-raw-chapter></audio-test-raw-chapter>
+
+    <h2>From URL</h2>
+    <audio-test-url></audio-test-url>
 
   </div>
 </template>
