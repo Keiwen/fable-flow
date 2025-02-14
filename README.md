@@ -15,10 +15,10 @@ that will be read (**no write action**).
 >## Important compatibility note
 > Fable Flow require, as first step, to select a directory from the user's device
 >
-> Currently, **no mobile browser** supports this requirement.
->At this date (2024-12-12), 
-> only Chrome 132 is known to potentially support it, 
-> with a release date planed on 2025-01-08.
+> Regarding mobile devices, **only Chrome mobile browser** currently
+> supports this requirement, and only since version 132,
+> released around 2025-01-14.
+> Other browsers does not plan to add this functionality soon (in 2025).
 >
 > Regarding PC browser, Fable Flow should be compatible with
 > Chrome, Edge and Opera.
@@ -67,3 +67,10 @@ I promise I tried my best to make it clean ;)
 
 ## Samples
 ![Chapter play screenshot](https://raw.githubusercontent.com/Keiwen/fable-flow/master/samples/play.png)
+
+## Sound issue on mobile
+If you does not hear any sound (can happen maoinly on mobile devices),
+please check the permissions for the website.
+On the address bar, you should have a setting button near the url.
+Click on it to open settings for this specific website, and check permissions.
+You may have a specific 'sound' section, be sure to enable it.
