@@ -110,7 +110,6 @@ const audioPlayerLoaded = (e) => {
     duration.value = audioPlayer.value.duration
     audioPlayer.value.currentTime = initTrackTime.value
   }
-  console.log(e)
 }
 
 const trackTimeBack = (backTime) => {
