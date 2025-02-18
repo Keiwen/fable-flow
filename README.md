@@ -68,9 +68,14 @@ I promise I tried my best to make it clean ;)
 ## Samples
 ![Chapter play screenshot](https://raw.githubusercontent.com/Keiwen/fable-flow/master/samples/play.png)
 
-## Sound issue on mobile
-If you does not hear any sound (can happen maoinly on mobile devices),
+## Mobile troubleshooting
+### Sound issue
+If you does not hear any sound (can happen mainly on mobile devices),
 please check the permissions for the website.
 On the address bar, you should have a setting button near the url.
 Click on it to open settings for this specific website, and check permissions.
 You may have a specific 'sound' section, be sure to enable it.
+### Library reset
+Mobile browser currently revoke any permission granted to access your file, 
+for security reasons. Therefore, you'll need to declare your library folder
+each time you re-open the application, and there's nothing I can do here!
