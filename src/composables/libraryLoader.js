@@ -14,7 +14,7 @@ export function useLibraryLoader (store) {
 
   const getLibraryHandle = async () => {
     if (libraryHandle.value) {
-      return libraryHandle
+      return libraryHandle.value
     }
     // try to retrieve what was stored
     libraryHandle.value = await useStorageInstance().getLibraryHandle()

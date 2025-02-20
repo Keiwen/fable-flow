@@ -75,7 +75,10 @@ please check the permissions for the website.
 On the address bar, you should have a setting button near the url.
 Click on it to open settings for this specific website, and check permissions.
 You may have a specific 'sound' section, be sure to enable it.
-### Library reset
+### Library permission reset
 Mobile browser currently revoke any permission granted to access your file, 
-for security reasons. Therefore, you'll need to declare your library folder
-each time you re-open the application, and there's nothing I can do here!
+for security reasons. Therefore, you'll 'lost' access to your library folder
+each time you re-open the application. Therefore, whenever this is detected,
+you are redirected to the setup page with a new button to restore permission.
+By security reason again, you need to click on this button and it cannot be
+automated.

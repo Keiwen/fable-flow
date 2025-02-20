@@ -20,12 +20,11 @@ export default function addNavigationGuards (router, store) {
     }
 
     // check that we still have permission
-    if (libraryHandle) {
-      const hasPermission = await useHandlePermission().hasPermission(libraryHandle.value)
-      if (!hasPermission && to.name !== 'setup') {
-        // persist message as we will redirect
+    if (libraryHandle && to.name !== 'setup') {
+      const hasPermission = await useHandlePermission().hasPermission(libraryHandle)
+      if (!hasPermission) {
         addWarningMessage('Access to library is no longer granted', '', true)
-        return { name: 'setup' }
+        return { name: 'setup', query: { restore: true } }
       }
     }
 
