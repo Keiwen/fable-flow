@@ -3,7 +3,7 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: './',
-  outputDir: (process.env.NODE_ENV === 'production') ? 'dist' : 'docs',
+  outputDir: 'docs',
   pwa: {
     iconPaths: {
       favicon32: 'favicon.ico',
