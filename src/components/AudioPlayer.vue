@@ -3,6 +3,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useLibraryLoader } from '@/composables/libraryLoader'
 import { useFlashMessages } from '@/composables/flashMessages'
+import { useKeepAlive } from '@/composables/keepAlive'
 import AudioPlayerPlayButton from '@/components/AudioPlayerPlayButton'
 import AudioPlayerRewindButton from '@/components/AudioPlayerRewindButton'
 import AudioPlayerTimeview from '@/components/AudioPlayerTimeview'
@@ -63,6 +64,7 @@ const playChapter = async (chapterHandle, autoPlay = true) => {
     // reload
     await audioPlayer.value.load()
     if (autoPlay) {
+      await useKeepAlive().start()
       await audioPlayer.value.play()
       playing.value = true
     }
@@ -76,6 +78,7 @@ const stopAudio = async () => {
   await audioPlayer.value.pause()
   currentTime.value = 0
   currentProgress.value = 0
+  await useKeepAlive().stop()
   playing.value = false
 }
 
@@ -87,19 +90,23 @@ const audioPlayerTimeUpdate = (e) => {
   }
 }
 
-const audioPlayerPause = (e) => {
+const audioPlayerPause = async (e) => {
+  await useKeepAlive().stop()
   playing.value = false
 }
 
-const audioPlayerPlay = (e) => {
+const audioPlayerPlay = async (e) => {
+  await useKeepAlive().start()
   playing.value = true
 }
 
-const audioPlayerEnded = (e) => {
+const audioPlayerEnded = async (e) => {
+  await useKeepAlive().stop()
   playing.value = false
 }
 
-const audioPlayerError = (e) => {
+const audioPlayerError = async (e) => {
+  await useKeepAlive().stop()
   playing.value = false
   addErrorMessage('An error occurred on audio player')
   console.error(e)
@@ -125,11 +132,13 @@ const changeProgress = (percentProgress) => {
   }
 }
 
-const togglePlay = () => {
+const togglePlay = async () => {
   if (audioPlayer.value) {
     if (audioPlayer.value.paused) {
+      await useKeepAlive().start()
       audioPlayer.value.play()
     } else {
+      await useKeepAlive().stop()
       audioPlayer.value.pause()
     }
     playing.value = !playing.value
