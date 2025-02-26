@@ -3,6 +3,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useLibraryLoader } from '@/composables/libraryLoader'
 import { useFlashMessages } from '@/composables/flashMessages'
+import { useAmplifySound } from '@/composables/amplifySound'
 import AudioPlayerPlayButton from '@/components/AudioPlayerPlayButton'
 import AudioPlayerRewindButton from '@/components/AudioPlayerRewindButton'
 import AudioPlayerTimeview from '@/components/AudioPlayerTimeview'
@@ -87,19 +88,19 @@ const audioPlayerTimeUpdate = (e) => {
   }
 }
 
-const audioPlayerPause = async (e) => {
+const audioPlayerPause = (e) => {
   playing.value = false
 }
 
-const audioPlayerPlay = async (e) => {
+const audioPlayerPlay = (e) => {
   playing.value = true
 }
 
-const audioPlayerEnded = async (e) => {
+const audioPlayerEnded = (e) => {
   playing.value = false
 }
 
-const audioPlayerError = async (e) => {
+const audioPlayerError = (e) => {
   playing.value = false
   addErrorMessage('An error occurred on audio player')
   console.error(e)
@@ -125,7 +126,7 @@ const changeProgress = (percentProgress) => {
   }
 }
 
-const togglePlay = async () => {
+const togglePlay = () => {
   if (audioPlayer.value) {
     if (audioPlayer.value.paused) {
       audioPlayer.value.play()
@@ -144,6 +145,7 @@ watch(currentTime, (newValue, oldValue) => {
 
 onMounted(async () => {
   if (audioPlayer.value) {
+    useAmplifySound().initializeAmplifier(audioPlayer.value)
     audioPlayer.value.addEventListener('timeupdate', audioPlayerTimeUpdate)
     audioPlayer.value.addEventListener('loadedmetadata', audioPlayerLoaded)
     audioPlayer.value.addEventListener('pause', audioPlayerPause)

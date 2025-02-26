@@ -22,13 +22,15 @@ export default createStore({
     author: '',
     book: '',
     chapterIndex: 0,
-    trackTime: 0
+    trackTime: 0,
+    amplifyLevel: 1
   },
   getters: {
     author: (state) => state.author,
     book: (state) => state.book,
     chapterIndex: (state) => state.chapterIndex,
-    trackTime: (state) => state.trackTime
+    trackTime: (state) => state.trackTime,
+    amplifyLevel: (state) => state.amplifyLevel
   },
   mutations: {
     setLibrary (state, library) {
@@ -45,6 +47,9 @@ export default createStore({
     },
     setTrackTime (state, time) {
       state.trackTime = time
+    },
+    setAmplifyLevel (state, amplifyLevel) {
+      state.amplifyLevel = amplifyLevel
     },
     resetSelection (state) {
       state.author = ''
@@ -80,6 +85,9 @@ export default createStore({
     },
     updateTrackTime ({ commit }, time) {
       commit('setTrackTime', time)
+    },
+    setAmplifyLevel ({ commit }, amplifyLevel) {
+      commit('setAmplifyLevel', amplifyLevel)
     }
   },
   modules: {
