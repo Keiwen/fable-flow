@@ -23,14 +23,16 @@ export default createStore({
     book: '',
     chapterIndex: 0,
     trackTime: 0,
-    amplifyLevel: 1
+    amplifyLevel: 1,
+    autoplayNextChapter: false
   },
   getters: {
     author: (state) => state.author,
     book: (state) => state.book,
     chapterIndex: (state) => state.chapterIndex,
     trackTime: (state) => state.trackTime,
-    amplifyLevel: (state) => state.amplifyLevel
+    amplifyLevel: (state) => state.amplifyLevel,
+    autoplayNextChapter: (state) => state.autoplayNextChapter
   },
   mutations: {
     setLibrary (state, library) {
@@ -50,6 +52,9 @@ export default createStore({
     },
     setAmplifyLevel (state, amplifyLevel) {
       state.amplifyLevel = amplifyLevel
+    },
+    setAutoplayNextChapter (state, autoplayNextChapter) {
+      state.autoplayNextChapter = autoplayNextChapter
     },
     resetSelection (state) {
       state.author = ''
@@ -88,6 +93,9 @@ export default createStore({
     },
     setAmplifyLevel ({ commit }, amplifyLevel) {
       commit('setAmplifyLevel', amplifyLevel)
+    },
+    setAutoplayNextChapter ({ commit }, autoplayNextChapter) {
+      commit('setAutoplayNextChapter', autoplayNextChapter)
     }
   },
   modules: {

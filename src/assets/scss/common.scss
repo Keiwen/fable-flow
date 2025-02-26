@@ -100,4 +100,15 @@ body {
     @import 'select';
     @import 'audioPlayer';
 
+
+    .enhancedToggle {
+        margin: auto;
+        &.enhancedCheck-ffon .enhancedToggle-label {
+            background-color: var(--secondary);
+        }
+        &.enhancedCheck-ffoff .enhancedToggle-label {
+            background-color: transparent;
+        }
+    }
+
 }

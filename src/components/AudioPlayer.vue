@@ -27,6 +27,7 @@ const currentAuthor = computed(() => store.getters.author)
 const currentBook = computed(() => store.getters.book)
 const currentChapterIndex = computed(() => store.getters.chapterIndex)
 const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, currentBook.value, currentChapterIndex.value))
+const autoplayNextChapter = computed(() => store.getters.autoplayNextChapter)
 
 // methods
 const startBook = async () => {
@@ -98,6 +99,9 @@ const audioPlayerPlay = (e) => {
 
 const audioPlayerEnded = (e) => {
   playing.value = false
+  if (autoplayNextChapter.value) {
+    nextChapter()
+  }
 }
 
 const audioPlayerError = (e) => {
