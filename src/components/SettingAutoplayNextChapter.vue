@@ -22,7 +22,7 @@ onMounted(async () => {
 <template>
   <div>
     <label for="autoplayNextChapter">When chapter ends:</label>
-    <enhanced-toggle label-on="Play next" label-off="Pause"
+    <enhanced-toggle label-on="play next" label-off="pause playback"
                      style-on="ffon" style-off="ffoff"
                      v-model="autoplay"
                      id="autoplayNextChapter">
