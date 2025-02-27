@@ -2,6 +2,7 @@
 import PackageJson from '@/../package.json'
 import SettingAmplify from '@/components/SettingAmplify'
 import SettingAutoplayNextChapter from '@/components/SettingAutoplayNextChapter'
+import SettingChapterTitle from '@/components/SettingChapterTitle'
 
 const appVersion = PackageJson.version
 
@@ -16,6 +17,7 @@ const appVersion = PackageJson.version
     <div class="settings-container">
       <setting-amplify></setting-amplify>
       <setting-autoplay-next-chapter></setting-autoplay-next-chapter>
+      <setting-chapter-title></setting-chapter-title>
     </div>
   </div>
 </template>

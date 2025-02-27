@@ -24,7 +24,8 @@ export default createStore({
     chapterIndex: 0,
     trackTime: 0,
     amplifyLevel: 1,
-    autoplayNextChapter: false
+    autoplayNextChapter: false,
+    displayChapterTitle: true
   },
   getters: {
     author: (state) => state.author,
@@ -32,7 +33,8 @@ export default createStore({
     chapterIndex: (state) => state.chapterIndex,
     trackTime: (state) => state.trackTime,
     amplifyLevel: (state) => state.amplifyLevel,
-    autoplayNextChapter: (state) => state.autoplayNextChapter
+    autoplayNextChapter: (state) => state.autoplayNextChapter,
+    displayChapterTitle: (state) => state.displayChapterTitle
   },
   mutations: {
     setLibrary (state, library) {
@@ -55,6 +57,9 @@ export default createStore({
     },
     setAutoplayNextChapter (state, autoplayNextChapter) {
       state.autoplayNextChapter = autoplayNextChapter
+    },
+    setDisplayChapterTitle (state, displayChapterTitle) {
+      state.displayChapterTitle = displayChapterTitle
     },
     resetSelection (state) {
       state.author = ''
@@ -96,6 +101,9 @@ export default createStore({
     },
     setAutoplayNextChapter ({ commit }, autoplayNextChapter) {
       commit('setAutoplayNextChapter', autoplayNextChapter)
+    },
+    setDisplayChapterTitle ({ commit }, displayChapterTitle) {
+      commit('setDisplayChapterTitle', displayChapterTitle)
     }
   },
   modules: {
