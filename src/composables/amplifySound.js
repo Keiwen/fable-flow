@@ -5,7 +5,7 @@ const amplifier = ref(null)
 
 export function useAmplifySound () {
   const store = useStore()
-  const amplifyLevel = computed(() => store.getters.amplifyLevel)
+  const amplifySound = computed(() => store.getters.amplifySound)
 
   const initializeAmplifier = (mediaElmt) => {
     if (!amplifier.value) {
@@ -20,7 +20,9 @@ export function useAmplifySound () {
       amplifier.value.source.connect(amplifier.value.gain)
       amplifier.value.gain.connect(context.destination)
 
-      changeLevel(amplifyLevel.value)
+      if (amplifySound.value) {
+        changeLevel(2)
+      }
     }
   }
 

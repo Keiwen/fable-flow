@@ -2,31 +2,33 @@
 import { ref, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useAmplifySound } from '@/composables/amplifySound'
+import { EnhancedToggle } from 'vue-enhanced-check'
 
 const store = useStore()
 
 // data
-const amplifyLevel = ref(0)
+const amplifySound = ref(0)
 
 // watch
-watch(amplifyLevel, async (newValue) => {
-  if (!newValue || newValue === store.getters.amplifyLevel) return
-  await store.dispatch('setAmplifyLevel', newValue)
-  await useAmplifySound().changeLevel(newValue)
+watch(amplifySound, async (newValue) => {
+  if (newValue === store.getters.amplifySound) return
+  await store.dispatch('setAmplifySound', newValue)
+  await useAmplifySound().changeLevel(newValue ? 2 : 1)
 })
 
 onMounted(async () => {
-  amplifyLevel.value = store.getters.amplifyLevel
+  amplifySound.value = store.getters.amplifySound
 })
 </script>
 
 <template>
   <div>
-    <label for="amplifyLevel">Amplify sound:</label>
-    <select id="amplifyLevel" v-model="amplifyLevel">
-      <option :value="1">Normal</option>
-      <option :value="2">x2</option>
-    </select>
+    <label for="amplifySound">Sound is:</label>
+    <enhanced-toggle label-on="amplified x2" label-off="normal"
+                     style-on="ffon" style-off="ffoff"
+                     v-model="amplifySound"
+                     id="amplifySound">
+    </enhanced-toggle>
   </div>
 </template>
 

@@ -23,7 +23,7 @@ export default createStore({
     book: '',
     chapterIndex: 0,
     trackTime: 0,
-    amplifyLevel: 1,
+    amplifySound: false,
     autoplayNextChapter: false,
     displayChapterTitle: true
   },
@@ -32,7 +32,7 @@ export default createStore({
     book: (state) => state.book,
     chapterIndex: (state) => state.chapterIndex,
     trackTime: (state) => state.trackTime,
-    amplifyLevel: (state) => state.amplifyLevel,
+    amplifySound: (state) => state.amplifySound,
     autoplayNextChapter: (state) => state.autoplayNextChapter,
     displayChapterTitle: (state) => state.displayChapterTitle
   },
@@ -52,8 +52,8 @@ export default createStore({
     setTrackTime (state, time) {
       state.trackTime = time
     },
-    setAmplifyLevel (state, amplifyLevel) {
-      state.amplifyLevel = amplifyLevel
+    setAmplifySound (state, amplifySound) {
+      state.amplifySound = amplifySound
     },
     setAutoplayNextChapter (state, autoplayNextChapter) {
       state.autoplayNextChapter = autoplayNextChapter
@@ -96,8 +96,8 @@ export default createStore({
     updateTrackTime ({ commit }, time) {
       commit('setTrackTime', time)
     },
-    setAmplifyLevel ({ commit }, amplifyLevel) {
-      commit('setAmplifyLevel', amplifyLevel)
+    setAmplifySound ({ commit }, amplifySound) {
+      commit('setAmplifySound', amplifySound)
     },
     setAutoplayNextChapter ({ commit }, autoplayNextChapter) {
       commit('setAutoplayNextChapter', autoplayNextChapter)
