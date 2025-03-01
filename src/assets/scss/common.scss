@@ -94,6 +94,16 @@ body {
         }
     }
 
+    .settings-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    @media (width < $screen-width-small) {
+        .settings-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
     @import 'nav';
     @import 'button';
     @import 'alert';
