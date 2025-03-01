@@ -4,6 +4,7 @@ import { useStore } from 'vuex'
 import { useLibraryLoader } from '@/composables/libraryLoader'
 import { useFlashMessages } from '@/composables/flashMessages'
 import { useAmplifySound } from '@/composables/amplifySound'
+import { useMediaSession } from '@/composables/mediaSession'
 import AudioPlayerPlayButton from '@/components/AudioPlayerPlayButton'
 import AudioPlayerRewindButton from '@/components/AudioPlayerRewindButton'
 import AudioPlayerTimeview from '@/components/AudioPlayerTimeview'
@@ -64,6 +65,7 @@ const playChapter = async (chapterHandle, autoPlay = true) => {
     chapterSrc.value = URL.createObjectURL(audioFile)
     // reload
     await audioPlayer.value.load()
+    useMediaSession().setup(currentAuthor.value, currentBook.value, currentChapter.value.name)
     if (autoPlay) {
       await audioPlayer.value.play()
       playing.value = true
