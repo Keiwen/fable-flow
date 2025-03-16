@@ -22,6 +22,7 @@ export function useAudioControl () {
   const currentChapterIndex = computed(() => store.getters.chapterIndex)
   const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, currentBook.value, currentChapterIndex.value))
   const autoplayNextChapter = computed(() => store.getters.autoplayNextChapter)
+  const displayChapterTitle = computed(() => store.getters.displayChapterTitle)
 
   const initializeAudioPlayer = async (audioPlayerElmt) => {
     audioPlayer.value = audioPlayerElmt
@@ -64,7 +65,8 @@ export function useAudioControl () {
       chapterSrc.value = URL.createObjectURL(audioFile)
       // reload
       await audioPlayer.value.load()
-      useMediaSession(this).setup(currentAuthor.value, currentBook.value, currentChapter.value.name)
+      const mediaTitle = displayChapterTitle.value ? currentChapter.value.name : 'Chapter ' + currentChapterIndex.value
+      useMediaSession(this).setup(currentAuthor.value, currentBook.value, mediaTitle)
       if (autoPlay) {
         await audioPlayer.value.play()
         playing.value = true
