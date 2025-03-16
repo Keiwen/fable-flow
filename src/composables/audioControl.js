@@ -50,6 +50,7 @@ export function useAudioControl () {
   }
 
   const playChapter = async (chapterHandle, autoPlay = true) => {
+    if (!audioPlayer.value) return
     if (!chapterHandle) {
       addErrorMessage('No chapter found')
       return
@@ -63,7 +64,7 @@ export function useAudioControl () {
       chapterSrc.value = URL.createObjectURL(audioFile)
       // reload
       await audioPlayer.value.load()
-      useMediaSession().setup(currentAuthor.value, currentBook.value, currentChapter.value.name)
+      useMediaSession(this).setup(currentAuthor.value, currentBook.value, currentChapter.value.name)
       if (autoPlay) {
         await audioPlayer.value.play()
         playing.value = true
@@ -75,6 +76,7 @@ export function useAudioControl () {
   }
 
   const nextChapter = async () => {
+    if (!audioPlayer.value) return
     initTrackTime.value = 0
     const nextIndex = currentChapterIndex.value + 1
     const nextChapter = getChapterFromBook(currentAuthor.value, currentBook.value, nextIndex)
@@ -88,6 +90,7 @@ export function useAudioControl () {
   }
 
   const startBook = async () => {
+    if (!audioPlayer.value) return
     initTrackTime.value = 0
     await stopAudio()
     await store.dispatch('selectChapterIndex', 0)
@@ -95,35 +98,32 @@ export function useAudioControl () {
   }
 
   const trackTimeBack = (backTime) => {
-    if (audioPlayer.value) {
-      audioPlayer.value.currentTime -= backTime
-      // if below 0, it is set to 0
-    }
+    if (!audioPlayer.value) return
+    if (!backTime) backTime = 10
+    audioPlayer.value.currentTime -= backTime
+    // if below 0, it is set to 0
   }
 
   const changeProgress = (percentProgress) => {
-    if (audioPlayer.value) {
-      audioPlayer.value.currentTime = (parseInt(percentProgress) / 100) * audioPlayer.value.duration
-    }
+    if (!audioPlayer.value) return
+    audioPlayer.value.currentTime = (parseInt(percentProgress) / 100) * audioPlayer.value.duration
   }
 
   const togglePlay = () => {
-    if (audioPlayer.value) {
-      if (audioPlayer.value.paused) {
-        audioPlayer.value.play()
-      } else {
-        audioPlayer.value.pause()
-      }
-      playing.value = !playing.value
+    if (!audioPlayer.value) return
+    if (audioPlayer.value.paused) {
+      audioPlayer.value.play()
+    } else {
+      audioPlayer.value.pause()
     }
+    playing.value = !playing.value
   }
 
   const audioPlayerTimeUpdate = (e) => {
-    // check that audio player is still there, we may have this event called on nav while audio player became null
-    if (audioPlayer.value) {
-      currentTime.value = Math.floor(audioPlayer.value.currentTime)
-      currentProgress.value = Math.round((audioPlayer.value.currentTime / audioPlayer.value.duration) * 100)
-    }
+    if (!audioPlayer.value) return
+    // note: previous check is important, we may have this event called on nav while audio player became null
+    currentTime.value = Math.floor(audioPlayer.value.currentTime)
+    currentProgress.value = Math.round((audioPlayer.value.currentTime / audioPlayer.value.duration) * 100)
   }
 
   const audioPlayerPause = (e) => {
@@ -148,10 +148,9 @@ export function useAudioControl () {
   }
 
   const audioPlayerLoaded = (e) => {
-    if (audioPlayer.value) {
-      duration.value = audioPlayer.value.duration
-      audioPlayer.value.currentTime = initTrackTime.value
-    }
+    if (!audioPlayer.value) return
+    duration.value = audioPlayer.value.duration
+    audioPlayer.value.currentTime = initTrackTime.value
   }
 
   watch(currentTime, (newValue, oldValue) => {

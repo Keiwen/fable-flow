@@ -87,3 +87,6 @@ After a while, application may close itself: while you are listening
 to the audio file, Android may consider you as 'inactive' and close
 application (surely for battery saving purpose).
 Several workaround has been tested without success.
+### 'Previous track' command
+Default 'previous track' command has been linked on purpose
+to the rewind command , instead of actually load previous track.

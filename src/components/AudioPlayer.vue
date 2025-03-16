@@ -42,7 +42,7 @@ onMounted(async () => {
         <audio-player-play-button :playing="playing" color="var(--primary)" @click-play="audioControl.togglePlay"></audio-player-play-button>
         <audio-player-timeline :percent-progress="currentProgress" @change-progress="audioControl.changeProgress"></audio-player-timeline>
         <audio-player-timeview :duration="duration" :current-time="currentTime"></audio-player-timeview>
-        <audio-player-rewind-button color="var(--primary)" @click-rewind="audioControl.trackTimeBack(10)"></audio-player-rewind-button>
+        <audio-player-rewind-button color="var(--primary)" @click-rewind="audioControl.trackTimeBack()"></audio-player-rewind-button>
       </div>
       <div>
         <button class="btn-secondary" @click="audioControl.nextChapter">Next chapter</button>
