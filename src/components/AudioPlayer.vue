@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue'
 import { useFlashMessages } from '@/composables/flashMessages'
 import { useAudioControl } from '@/composables/audioControl'
-import { useAmplifySound } from '@/composables/amplifySound'
 import AudioPlayerPlayButton from '@/components/AudioPlayerPlayButton'
 import AudioPlayerRewindButton from '@/components/AudioPlayerRewindButton'
 import AudioPlayerTimeview from '@/components/AudioPlayerTimeview'
@@ -21,8 +20,6 @@ const currentTime = audioControl.currentTime
 onMounted(async () => {
   if (audioPlayer.value) {
     audioControl.initializeAudioPlayer(audioPlayer.value)
-
-    useAmplifySound().initializeAmplifier(audioPlayer.value)
   } else {
     addErrorMessage('Cannot initialize audio player')
   }

@@ -3,6 +3,7 @@ import { useStore } from 'vuex'
 import { useFlashMessages } from '@/composables/flashMessages'
 import { useLibraryLoader } from '@/composables/libraryLoader'
 import { useMediaSession } from '@/composables/mediaSession'
+import { useAmplifySound } from '@/composables/amplifySound'
 
 const audioPlayer = ref(null)
 
@@ -30,6 +31,7 @@ export function useAudioControl () {
     audioPlayer.value.addEventListener('play', audioPlayerPlay)
     audioPlayer.value.addEventListener('ended', audioPlayerEnded)
     audioPlayer.value.addEventListener('error', audioPlayerError)
+    useAmplifySound().initializeAmplifier(audioPlayer.value)
     if (currentChapter.value) {
       await playChapter(currentChapter.value, false)
       const storedTrackTime = store.getters.trackTime
