@@ -7,7 +7,7 @@ import { EnhancedToggle } from 'vue-enhanced-check'
 const store = useStore()
 
 // data
-const amplifySound = ref(0)
+const amplifySound = ref(false)
 
 // watch
 watch(amplifySound, async (newValue) => {
