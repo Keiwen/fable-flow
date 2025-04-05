@@ -66,7 +66,7 @@ export function useAudioControl () {
       // reload
       await audioPlayer.value.load()
       const mediaTitle = displayChapterTitle.value ? currentChapter.value.name : 'Chapter ' + currentChapterIndex.value
-      useMediaSession(this).setup(currentAuthor.value, currentBook.value, mediaTitle)
+      useMediaSession().setup(currentAuthor.value, currentBook.value, mediaTitle)
       if (autoPlay) {
         await audioPlayer.value.play()
         playing.value = true

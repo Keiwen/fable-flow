@@ -1,4 +1,6 @@
-export function useMediaSession (audioControl) {
+import { useAudioControl } from '@/composables/audioControl'
+
+export function useMediaSession () {
   const setup = (author, book, chapter) => {
     if ('mediaSession' in navigator) {
       const metadata = {
@@ -11,12 +13,12 @@ export function useMediaSession (audioControl) {
 
     navigator.mediaSession.setActionHandler('previoustrack', function () {
       // code to manage previous track button => back 10s?
-      if (audioControl) audioControl.trackTimeBack()
+      useAudioControl().trackTimeBack()
     })
 
     navigator.mediaSession.setActionHandler('nexttrack', function () {
       // code to manage next track button => next chapter
-      if (audioControl) audioControl.nextChapter()
+      useAudioControl().nextChapter()
     })
   }
 
