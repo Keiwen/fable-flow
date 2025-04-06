@@ -19,7 +19,7 @@ export function useAudioControl () {
   const playing = ref(false)
   const currentAuthor = computed(() => store.getters.author)
   const currentBook = computed(() => store.getters.book)
-  const currentChapterIndex = computed(() => store.getters.chapterIndex)
+  const currentChapterIndex = computed(() => store.getters.getChapterIndex())
   const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, currentBook.value, currentChapterIndex.value))
   const autoplayNextChapter = computed(() => store.getters.autoplayNextChapter)
   const displayChapterTitle = computed(() => store.getters.displayChapterTitle)
@@ -35,7 +35,7 @@ export function useAudioControl () {
     useAmplifySound().initializeAmplifier(audioPlayer.value)
     if (currentChapter.value) {
       await playChapter(currentChapter.value, false)
-      const storedTrackTime = store.getters.trackTime
+      const storedTrackTime = store.getters.getTrackTime()
       if (storedTrackTime) {
         initTrackTime.value = storedTrackTime
       }

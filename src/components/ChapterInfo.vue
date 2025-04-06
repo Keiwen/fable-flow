@@ -9,7 +9,7 @@ const { getChapterFromBook } = useLibraryLoader()
 // computed
 const currentAuthor = computed(() => store.getters.author)
 const currentBook = computed(() => store.getters.book)
-const currentChapterIndex = computed(() => store.getters.chapterIndex)
+const currentChapterIndex = computed(() => store.getters.getChapterIndex())
 const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, currentBook.value, currentChapterIndex.value))
 
 </script>

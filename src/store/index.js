@@ -21,8 +21,7 @@ export default createStore({
     library: '',
     author: '',
     book: '',
-    chapterIndex: 0,
-    trackTime: 0,
+    shelf: {},
     amplifySound: false,
     autoplayNextChapter: false,
     displayChapterTitle: true
@@ -30,11 +29,29 @@ export default createStore({
   getters: {
     author: (state) => state.author,
     book: (state) => state.book,
-    chapterIndex: (state) => state.chapterIndex,
-    trackTime: (state) => state.trackTime,
     amplifySound: (state) => state.amplifySound,
     autoplayNextChapter: (state) => state.autoplayNextChapter,
-    displayChapterTitle: (state) => state.displayChapterTitle
+    displayChapterTitle: (state) => state.displayChapterTitle,
+    shelf: (state) => state.shelf,
+    getBookOnShelf: (state, getters) => (author, book) => {
+      if (!author) author = getters.author
+      if (!author) return null
+      if (!book) book = getters.book
+      if (!book) return null
+      const authorOnShelf = state.shelf[author]
+      if (!authorOnShelf) return null
+      return authorOnShelf[book] ?? null
+    },
+    getChapterIndex: (state, getters) => (author, book) => {
+      const bookOnShelf = getters.getBookOnShelf(author, book)
+      if (!bookOnShelf) return 0
+      return bookOnShelf.chapterIndex ?? 0
+    },
+    getTrackTime: (state, getters) => (author, book) => {
+      const bookOnShelf = getters.getBookOnShelf(author, book)
+      if (!bookOnShelf) return 0
+      return bookOnShelf.trackTime ?? 0
+    }
   },
   mutations: {
     setLibrary (state, library) {
@@ -47,10 +64,12 @@ export default createStore({
       state.book = book
     },
     setChapterIndex (state, index) {
-      state.chapterIndex = index
+      const book = state.shelf[state.author][state.book]
+      book.chapterIndex = index
     },
     setTrackTime (state, time) {
-      state.trackTime = time
+      const book = state.shelf[state.author][state.book]
+      book.trackTime = time
     },
     setAmplifySound (state, amplifySound) {
       state.amplifySound = amplifySound
@@ -61,11 +80,16 @@ export default createStore({
     setDisplayChapterTitle (state, displayChapterTitle) {
       state.displayChapterTitle = displayChapterTitle
     },
+    addBookOnShelf (state, authorAndBook) {
+      if (!state.shelf[authorAndBook.author]) state.shelf[authorAndBook.author] = {}
+      state.shelf[authorAndBook.author][authorAndBook.book] = {
+        chapterIndex: 0,
+        trackTime: 0
+      }
+    },
     resetSelection (state) {
       state.author = ''
       state.book = ''
-      state.chapterIndex = 0
-      state.trackTime = 0
     }
   },
   actions: {
@@ -80,14 +104,12 @@ export default createStore({
     },
     selectAuthor ({ commit }, author) {
       commit('setBook', '')
-      commit('setChapterIndex', 0)
       commit('setAuthor', author)
-      commit('setTrackTime', 0)
     },
-    selectBook ({ commit }, book) {
-      commit('setChapterIndex', 0)
+    selectBook ({ getters, dispatch, commit }, book) {
       commit('setBook', book)
-      commit('setTrackTime', 0)
+      const bookOnShelf = getters.getBookOnShelf(getters.author, book)
+      if (!bookOnShelf) dispatch('addBookOnShelf')
     },
     selectChapterIndex ({ commit }, index) {
       commit('setChapterIndex', index)
@@ -104,6 +126,13 @@ export default createStore({
     },
     setDisplayChapterTitle ({ commit }, displayChapterTitle) {
       commit('setDisplayChapterTitle', displayChapterTitle)
+    },
+    addBookOnShelf ({ getters, commit }, author, book) {
+      if (!author) author = getters.author
+      if (!author) return null
+      if (!book) book = getters.book
+      if (!book) return null
+      commit('addBookOnShelf', { author: author, book: book })
     }
   },
   modules: {
