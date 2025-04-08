@@ -3,6 +3,7 @@ import PackageJson from '@/../package.json'
 import SettingAmplify from '@/components/SettingAmplify'
 import SettingAutoplayNextChapter from '@/components/SettingAutoplayNextChapter'
 import SettingChapterTitle from '@/components/SettingChapterTitle'
+import SettingAutoRewindOnPause from '@/components/SettingAutoRewindOnPause'
 
 const appVersion = PackageJson.version
 
@@ -18,6 +19,7 @@ const appVersion = PackageJson.version
       <setting-amplify></setting-amplify>
       <setting-autoplay-next-chapter></setting-autoplay-next-chapter>
       <setting-chapter-title></setting-chapter-title>
+      <setting-auto-rewind-on-pause></setting-auto-rewind-on-pause>
     </div>
   </div>
 </template>

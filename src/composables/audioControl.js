@@ -23,6 +23,7 @@ export function useAudioControl () {
   const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, currentBook.value, currentChapterIndex.value))
   const autoplayNextChapter = computed(() => store.getters.autoplayNextChapter)
   const displayChapterTitle = computed(() => store.getters.displayChapterTitle)
+  const autoRewindOnPause = computed(() => store.getters.autoRewindOnPause)
 
   const initializeAudioPlayer = async (audioPlayerElmt) => {
     audioPlayer.value = audioPlayerElmt
@@ -130,6 +131,10 @@ export function useAudioControl () {
 
   const audioPlayerPause = (e) => {
     playing.value = false
+
+    if (autoRewindOnPause.value) {
+      trackTimeBack()
+    }
   }
 
   const audioPlayerPlay = (e) => {
