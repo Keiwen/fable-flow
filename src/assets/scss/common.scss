@@ -119,6 +119,14 @@ body {
         &.enhancedCheck-ffoff .enhancedToggle-label {
             background-color: transparent;
         }
+        &.enhancedCheck-fflight .enhancedToggle-label {
+            background-color: var(--light);
+            color: var(--dark)
+        }
+        &.enhancedCheck-ffdark .enhancedToggle-label {
+            background-color: var(--dark);
+            color: var(--light)
+        }
     }
 
 }

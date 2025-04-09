@@ -25,7 +25,8 @@ export default createStore({
     amplifySound: false,
     autoplayNextChapter: false,
     displayChapterTitle: true,
-    autoRewindOnPause: false
+    autoRewindOnPause: false,
+    theme: 'dark'
   },
   getters: {
     author: (state) => state.author,
@@ -34,6 +35,7 @@ export default createStore({
     autoplayNextChapter: (state) => state.autoplayNextChapter,
     displayChapterTitle: (state) => state.displayChapterTitle,
     autoRewindOnPause: (state) => state.autoRewindOnPause,
+    theme: (state) => state.theme,
     shelf: (state) => state.shelf,
     getBookOnShelf: (state, getters) => (author, book) => {
       if (!author) author = getters.author
@@ -85,6 +87,10 @@ export default createStore({
     setAutoRewindOnPause (state, autoRewindOnPause) {
       state.autoRewindOnPause = autoRewindOnPause
     },
+    setTheme (state, theme) {
+      console.log('commiting', theme)
+      state.theme = theme
+    },
     addBookOnShelf (state, authorAndBook) {
       if (!state.shelf[authorAndBook.author]) state.shelf[authorAndBook.author] = {}
       state.shelf[authorAndBook.author][authorAndBook.book] = {
@@ -134,6 +140,9 @@ export default createStore({
     },
     setAutoRewindOnPause ({ commit }, autoRewindOnPause) {
       commit('setAutoRewindOnPause', autoRewindOnPause)
+    },
+    setTheme ({ commit }, theme) {
+      commit('setTheme', theme)
     },
     addBookOnShelf ({ getters, commit }, author, book) {
       if (!author) author = getters.author

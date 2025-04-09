@@ -4,6 +4,7 @@ import SettingAmplify from '@/components/SettingAmplify'
 import SettingAutoplayNextChapter from '@/components/SettingAutoplayNextChapter'
 import SettingChapterTitle from '@/components/SettingChapterTitle'
 import SettingAutoRewindOnPause from '@/components/SettingAutoRewindOnPause'
+import SettingTheme from '@/components/SettingTheme'
 
 const appVersion = PackageJson.version
 
@@ -16,6 +17,7 @@ const appVersion = PackageJson.version
     <hr/>
     <p class="help">You are using version {{ appVersion }}</p>
     <div class="settings-container">
+      <setting-theme></setting-theme>
       <setting-amplify></setting-amplify>
       <setting-autoplay-next-chapter></setting-autoplay-next-chapter>
       <setting-chapter-title></setting-chapter-title>
