@@ -3,24 +3,23 @@ select {
   appearance: none;
 
   display: block;
-  border: 1px solid $primary;
+  border: 1px solid var(--primary);
   padding: 0.5rem 4rem 0.5rem 1rem;
-  background: url('@/assets/img/caret_down.svg') no-repeat right 0.3rem center / 1.8rem,
-  linear-gradient(to left, rgba($main-bg, 0.3) 2.5rem, rgba($main-bg, 0.05) 0);
-  color: $light;
-  font-size: $font-size-default;
+  background: url('@/assets/img/caret_down.svg') no-repeat right 0.3rem center / 1.8rem, var(--main-bg-alpha);
+  color: var(--light);
+  font-size: var(--font-size-default);
   cursor: pointer;
-  width: calc(100% - $margin-side);
+  width: calc(100% - var(--margin-side));
   &:focus {
     outline: none;
   }
   &.empty-select {
     font-style: italic;
-    color: rgba($main-color, 0.5);
+    color: rgba(var(--main-color), 0.5);
   }
   option {
-    color: $main-color;
-    background-color: $main-bg;
+    color: var(--main-color);
+    background-color: var(--main-bg);
     font-style: normal;
   }
 }

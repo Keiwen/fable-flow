@@ -4,7 +4,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import addNavigationGuards from '@/router/guards'
-import '@/assets/scss/theme_main.scss'
+import '@/assets/scss/common.scss'
 
 addNavigationGuards(router, store)
 

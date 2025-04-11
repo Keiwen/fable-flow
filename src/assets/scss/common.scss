@@ -2,33 +2,32 @@
 @import '_animations';
 
 /* Main Style */
-
-$margin-side: 10px;
-$font-size-default: 1.1rem;
-$font-size-large: 1.2rem;
-$font-size-small: 0.9rem;
-$audio-player-width: 320px;
-$audio-player-button-size: 80px;
 $screen-width-small: 740px;
 
 :root {
-    --main-color: #{$main-color};
-    --main-bg: #{$main-bg};
-    --primary: #{$primary};
-    --secondary: #{$secondary};
-    --success: #{$success};
-    --info: #{$info};
-    --warning: #{$warning};
-    --danger: #{$danger};
-    --light: #{$light};
-    --dark: #{$dark};
-    --border-radius: #{$border-radius};
-    --margin-side: #{$margin-side};
-    --font-size-default: #{$font-size-default};
-    --font-size-large: #{$font-size-large};
-    --font-size-small: #{$font-size-small};
-    --audio-player-button-size: #{$audio-player-button-size};
-    --audio-player-width: #{$audio-player-width};
+    --primary: #D6B14A;
+    --primary-alpha: #D6B14A40;
+    --secondary: #1768A4;
+    --secondary-alpha: #1768A440;
+    --success: #50B97E;
+    --success-alpha: #50B97E40;
+    --info: #7571C1;
+    --info-alpha: #7571C140;
+    --warning: #F37E2B;
+    --warning-alpha: #F37E2B40;
+    --danger: #FF4747;
+    --danger-alpha: #FF474740;
+    --light: #FFFFFF;
+    --dark: #000000;
+    --white: #FFFFFF;
+    --black: #000000;
+
+    --margin-side: 10px;
+    --font-size-default: 1.1rem;
+    --font-size-large: 1.2rem;
+    --font-size-small: 0.9rem;
+    --audio-player-button-size: 80px;
+    --audio-player-width: 320px;
     --timeline-slider-track-height: 5px;
     --timeline-slider-track-margin: 15px;
     --timeline-slider-thumb-size: 18px;
@@ -36,27 +35,38 @@ $screen-width-small: 740px;
 }
 
 body {
-    background-color: $main-bg;
-    color: $main-color;
+    margin: 0;
+}
+
+#app > div {
+    width: 100%;
+    background-color: var(--main-bg);
+    @include radialGradient(var(--light-bg), var(--main-bg));
+
+    color: var(--main-color);
     text-align: center;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    min-height: 97vh;
+    min-height: 100vh;
     height: auto;
-    padding: 20px $margin-side 10px $margin-side;
+    padding: 20px var(--margin-side) 10px var(--margin-side);
     box-sizing: border-box;
-    font-size: $font-size-default;
+    font-size: var(--font-size-default);
+
+    h1 {
+        color: var(--primary);
+    }
 
     form {
         text-align: justify;
     }
     label {
-        font-size: $font-size-large;
+        font-size: var(--font-size-large);
     }
 
     .help {
-        font-size: $font-size-small;
+        font-size: var(--font-size-small);
         font-style: italic;
         text-align: justify;
     }
@@ -69,9 +79,14 @@ body {
         margin-top: 20px;
     }
 
+    .custom-player-container {
+        @include radialGradient(var(--main-bg), var(--secondary));
+        outline: 2px solid var(--main-bg);
+    }
+
     .chapter-control-container {
         display: grid;
-        grid-template-columns: auto calc($audio-player-width + 40px) auto;
+        grid-template-columns: auto calc(var(--audio-player-width) + 40px) auto;
 
         @media (width < $screen-width-small) {
             grid-template-columns: auto auto;
@@ -104,6 +119,20 @@ body {
         }
     }
 
+    .message-container {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        z-index: 10;
+
+        .alert {
+            margin-right: var(--margin-side);
+            margin-left: var(--margin-side);
+        }
+    }
+
+
     @import 'nav';
     @import 'button';
     @import 'alert';
@@ -120,12 +149,12 @@ body {
             background-color: transparent;
         }
         &.enhancedCheck-fflight .enhancedToggle-label {
-            background-color: var(--light);
-            color: var(--dark)
+            background-color: var(--white);
+            color: var(--black)
         }
         &.enhancedCheck-ffdark .enhancedToggle-label {
-            background-color: var(--dark);
-            color: var(--light)
+            background-color: var(--black);
+            color: var(--xhite)
         }
     }
 

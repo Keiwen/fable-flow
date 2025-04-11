@@ -69,14 +69,14 @@
   transform-origin: 50%;
   @include transition(all 0.5s ease-in-out);
   &:hover {
-    color: $main-bg;
+    color: var(--main-bg);
     background: $bgColor;
   }
 }
 
 //container color
-@mixin containerColor($containerColor) {
-  border: 1px solid $containerColor;
-  color: $containerColor;
-  background-color: rgba($containerColor, 0.25);
+@mixin containerColor($containerColorName) {
+  border: 1px solid var(--#{$containerColorName});
+  color: var(--#{$containerColorName});
+  background-color: var(--#{$containerColorName}-alpha);
 }

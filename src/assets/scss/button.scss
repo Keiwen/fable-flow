@@ -2,47 +2,47 @@
 button,.btn {
   display: inline-block;
   background-color: transparent;
-  color: $light;
-  border: 1px solid $light;
-  border-radius: $border-radius;
+  color: var(--light);
+  border: 1px solid var(--light);
+  border-radius: var(--border-radius);
   padding: .25rem 1rem;
   line-height: 2;
-  font-size: $font-size-default;
+  font-size: var(--font-size-default);
   text-align: center;
   text-decoration: none;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   user-select: none;
   margin: 5px;
   cursor: pointer;
-  @include backgroundTransition($light, $main-bg);
+  @include backgroundTransition(var(--light), var(--main-bg));
   &.btn-primary {
-    color: $primary;
-    border-color: $primary;
-    @include backgroundTransition($primary, $main-bg);
+    color: var(--primary);
+    border-color: var(--primary);
+    @include backgroundTransition(var(--primary), var(--main-bg));
   }
   &.btn-secondary {
-    color: $secondary;
-    border-color: $secondary;
-    @include backgroundTransition($secondary, $main-bg);
+    color: var(--secondary);
+    border-color: var(--secondary);
+    @include backgroundTransition(var(--secondary), var(--main-bg));
   }
   &.btn-success {
-    color: $success;
-    border-color: $success;
-    @include backgroundTransition($success, $main-bg);
+    color: var(--success);
+    border-color: var(--success);
+    @include backgroundTransition(var(--success), var(--main-bg));
   }
   &.btn-info {
-    color: $info;
-    border-color: $info;
-    @include backgroundTransition($info, $main-bg);
+    color: var(--info);
+    border-color: var(--info);
+    @include backgroundTransition(var(--info), var(--main-bg));
   }
   &.btn-warning {
-    color: $warning;
-    border-color: $warning;
-    @include backgroundTransition($warning, $main-bg);
+    color: var(--warning);
+    border-color: var(--warning);
+    @include backgroundTransition(var(--warning), var(--main-bg));
   }
   &.btn-danger {
-    color: $danger;
-    border-color: $danger;
-    @include backgroundTransition($danger, $main-bg);
+    color: var(--danger);
+    border-color: var(--danger);
+    @include backgroundTransition(var(--danger), var(--main-bg));
   }
 }
