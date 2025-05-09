@@ -133,7 +133,10 @@ export function useAudioControl () {
     playing.value = false
 
     if (autoRewindOnPause.value) {
-      trackTimeBack()
+      // only if end not reached
+      if (audioPlayer.value.currentTime !== audioPlayer.value.duration) {
+        trackTimeBack()
+      }
     }
   }
 
