@@ -7,15 +7,21 @@ const store = useStore()
 
 // data
 const autoplay = ref(false)
+const soundplay = ref(false)
 
 // watch
 watch(autoplay, async (newValue) => {
   if (newValue === store.getters.autoplayNextChapter) return
   await store.dispatch('setAutoplayNextChapter', newValue)
 })
+watch(soundplay, async (newValue) => {
+  if (newValue === store.getters.pageturnSoundPlay) return
+  await store.dispatch('setPageturnSoundPlay', newValue)
+})
 
 onMounted(async () => {
   autoplay.value = store.getters.autoplayNextChapter
+  soundplay.value = store.getters.pageturnSoundPlay
 })
 </script>
 
@@ -26,6 +32,11 @@ onMounted(async () => {
                      style-on="ffon" style-off="ffoff"
                      v-model="autoplay"
                      id="autoplayNextChapter">
+    </enhanced-toggle>
+    <enhanced-toggle label-on="pageturn sound" label-off="no sound"
+                     style-on="ffon" style-off="ffoff"
+                     v-model="soundplay"
+                     id="playPageturnSound">
     </enhanced-toggle>
   </div>
 </template>

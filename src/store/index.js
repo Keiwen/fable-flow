@@ -24,6 +24,7 @@ export default createStore({
     shelf: {},
     amplifySound: false,
     autoplayNextChapter: false,
+    pageturnSoundPlay: false,
     displayChapterTitle: true,
     autoRewindOnPause: false,
     theme: 'dark'
@@ -33,6 +34,7 @@ export default createStore({
     book: (state) => state.book,
     amplifySound: (state) => state.amplifySound,
     autoplayNextChapter: (state) => state.autoplayNextChapter,
+    pageturnSoundPlay: (state) => state.pageturnSoundPlay,
     displayChapterTitle: (state) => state.displayChapterTitle,
     autoRewindOnPause: (state) => state.autoRewindOnPause,
     theme: (state) => state.theme,
@@ -80,6 +82,9 @@ export default createStore({
     },
     setAutoplayNextChapter (state, autoplayNextChapter) {
       state.autoplayNextChapter = autoplayNextChapter
+    },
+    setPageturnSoundPlay (state, pageturnSoundPlay) {
+      state.pageturnSoundPlay = pageturnSoundPlay
     },
     setDisplayChapterTitle (state, displayChapterTitle) {
       state.displayChapterTitle = displayChapterTitle
@@ -131,8 +136,8 @@ export default createStore({
     setAmplifySound ({ commit }, amplifySound) {
       commit('setAmplifySound', amplifySound)
     },
-    setAutoplayNextChapter ({ commit }, autoplayNextChapter) {
-      commit('setAutoplayNextChapter', autoplayNextChapter)
+    setPageturnSoundPlay ({ commit }, pageturnSoundPlay) {
+      commit('setPageturnSoundPlay', pageturnSoundPlay)
     },
     setDisplayChapterTitle ({ commit }, displayChapterTitle) {
       commit('setDisplayChapterTitle', displayChapterTitle)

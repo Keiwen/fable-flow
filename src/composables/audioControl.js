@@ -6,6 +6,7 @@ import { useMediaSession } from '@/composables/mediaSession'
 import { useAmplifySound } from '@/composables/amplifySound'
 
 const audioPlayer = ref(null)
+const pageturnSound = new Audio('pageturn.mp3')
 
 export function useAudioControl () {
   const store = useStore()
@@ -22,6 +23,7 @@ export function useAudioControl () {
   const currentChapterIndex = computed(() => store.getters.getChapterIndex())
   const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, currentBook.value, currentChapterIndex.value))
   const autoplayNextChapter = computed(() => store.getters.autoplayNextChapter)
+  const playPageturnSound = computed(() => store.getters.pageturnSoundPlay)
   const displayChapterTitle = computed(() => store.getters.displayChapterTitle)
   const autoRewindOnPause = computed(() => store.getters.autoRewindOnPause)
 
@@ -161,6 +163,9 @@ export function useAudioControl () {
 
   const audioPlayerEnded = (e) => {
     playing.value = false
+    if (playPageturnSound.value) {
+      pageturnSound.play()
+    }
     if (autoplayNextChapter.value) {
       nextChapter()
     }
