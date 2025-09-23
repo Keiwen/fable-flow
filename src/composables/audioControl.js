@@ -92,6 +92,20 @@ export function useAudioControl () {
     }
   }
 
+  const previousChapter = async () => {
+    if (!audioPlayer.value) return
+    initTrackTime.value = 0
+    const previousIndex = currentChapterIndex.value - 1
+    const previousChapter = getChapterFromBook(currentAuthor.value, currentBook.value, previousIndex)
+    if (previousChapter) {
+      await stopAudio()
+      await store.dispatch('selectChapterIndex', previousIndex)
+      await playChapter(previousChapter)
+    } else {
+      addWarningMessage('This is the first chapter')
+    }
+  }
+
   const startBook = async () => {
     if (!audioPlayer.value) return
     initTrackTime.value = 0
@@ -181,6 +195,7 @@ export function useAudioControl () {
     stopAudio,
     playChapter,
     nextChapter,
+    previousChapter,
     startBook,
     trackTimeBack,
     changeProgress,

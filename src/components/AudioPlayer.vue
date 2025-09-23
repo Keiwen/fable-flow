@@ -36,7 +36,7 @@ onMounted(async () => {
     </div>
     <div class="chapter-control-container">
       <div>
-        <button class="btn-warning" @click="audioControl.startBook">Start book over</button>
+        <button class="btn-warning" @click="audioControl.previousChapter">Previous chapter</button>
       </div>
       <div class="custom-player-container">
         <audio-player-play-button :playing="playing" color="var(--primary)" @click-play="audioControl.togglePlay"></audio-player-play-button>
