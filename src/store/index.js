@@ -88,7 +88,6 @@ export default createStore({
       state.autoRewindOnPause = autoRewindOnPause
     },
     setTheme (state, theme) {
-      console.log('commiting', theme)
       state.theme = theme
     },
     addBookOnShelf (state, authorAndBook) {
