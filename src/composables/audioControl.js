@@ -127,6 +127,7 @@ export function useAudioControl () {
     // note: previous check is important, we may have this event called on nav while audio player became null
     currentTime.value = Math.floor(audioPlayer.value.currentTime)
     currentProgress.value = Math.round((audioPlayer.value.currentTime / audioPlayer.value.duration) * 100)
+    useMediaSession().updateProgress(audioPlayer.value.currentTime, audioPlayer.value.duration)
   }
 
   const audioPlayerPause = (e) => {

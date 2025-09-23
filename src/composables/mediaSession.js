@@ -22,5 +22,14 @@ export function useMediaSession () {
     })
   }
 
-  return { setup }
+  const updateProgress = (audioCurrentTime, audioDuration) => {
+    if (isNaN(audioDuration)) audioDuration = 0
+    navigator.mediaSession.setPositionState({
+      duration: audioDuration,
+      playbackRate: 1,
+      position: audioCurrentTime
+    })
+  }
+
+  return { setup, updateProgress }
 }
