@@ -136,6 +136,9 @@ export default createStore({
     setAmplifySound ({ commit }, amplifySound) {
       commit('setAmplifySound', amplifySound)
     },
+    setAutoplayNextChapter ({ commit }, autoplayNextChapter) {
+      commit('setAutoplayNextChapter', autoplayNextChapter)
+    },
     setPageturnSoundPlay ({ commit }, pageturnSoundPlay) {
       commit('setPageturnSoundPlay', pageturnSoundPlay)
     },
