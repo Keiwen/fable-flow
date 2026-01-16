@@ -1,6 +1,10 @@
 import { useAudioControl } from '@/composables/audioControl'
 
+let instance = null
+
 export function useMediaSession () {
+  if (instance) return instance // always return instance if exist
+
   const setup = (author, book, chapter) => {
     if ('mediaSession' in navigator) {
       const metadata = {
@@ -31,5 +35,6 @@ export function useMediaSession () {
     })
   }
 
-  return { setup, updateProgress }
+  instance = { setup, updateProgress }
+  return instance
 }

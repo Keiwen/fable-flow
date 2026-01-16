@@ -6,8 +6,11 @@ import { useStorageInstance } from '@/composables/storageInstance'
 
 const libraryHandle = ref(null)
 const tracks = ref({})
+let instance = null
 
 export function useLibraryLoader (store) {
+  if (instance) return instance // always return instance if exist
+
   let isLoading = false
   if (!store) store = useStore()
   const { addErrorMessage } = useFlashMessages()
@@ -127,7 +130,7 @@ export function useLibraryLoader (store) {
     return chapters[index]
   }
 
-  return {
+  instance = {
     libraryHandle,
     getLibraryHandle,
     tracks,
@@ -138,4 +141,6 @@ export function useLibraryLoader (store) {
     getChapterFromBook,
     isLoading
   }
+
+  return instance
 }
