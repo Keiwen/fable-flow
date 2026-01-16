@@ -35,6 +35,8 @@ export function useLibraryLoader (store) {
           list.push(entry)
         }
       }
+      // force alphabetical order
+      list.sort((a, b) => a.name.localeCompare(b.name, ['fr', 'en'], { sensitivity: 'base' }))
     } catch (e) {
       addErrorMessage('An error occurred on authors listing')
       console.error(e)
@@ -52,6 +54,8 @@ export function useLibraryLoader (store) {
           list.push(entry)
         }
       }
+      // force alphabetical order
+      list.sort((a, b) => a.name.localeCompare(b.name, ['fr', 'en'], { sensitivity: 'base' }))
     } catch (e) {
       addErrorMessage('An error occurred on books listing for author ' + authorHandle.name)
       console.error(e)
@@ -75,6 +79,8 @@ export function useLibraryLoader (store) {
           }
         }
       }
+      // force alphabetical order
+      list.sort((a, b) => a.name.localeCompare(b.name, ['fr', 'en'], { sensitivity: 'base' }))
     } catch (e) {
       addErrorMessage('An error occurred on chapters listing for book ' + bookHandle.name)
       console.error(e)
