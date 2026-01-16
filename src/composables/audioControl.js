@@ -70,6 +70,9 @@ export function useAudioControl () {
       await audioPlayer.value.load()
       const mediaTitle = displayChapterTitle.value ? currentChapter.value.name : 'Chapter ' + currentChapterIndex.value
       useMediaSession().setup(currentAuthor.value, currentBook.value, mediaTitle)
+      if (currentChapterIndex.value === 0 && currentTime.value === 0) {
+        await store.dispatch('flagBookCompletion', false)
+      }
       if (autoPlay) {
         await audioPlayer.value.play()
         playing.value = true
@@ -168,6 +171,8 @@ export function useAudioControl () {
     }
     if (autoplayNextChapter.value) {
       nextChapter()
+    } else {
+      store.dispatch('flagBookCompletion', true)
     }
   }
 

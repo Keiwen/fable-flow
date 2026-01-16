@@ -53,6 +53,11 @@ export default createStore({
       if (!bookOnShelf) return 0
       return bookOnShelf.chapterIndex ?? 0
     },
+    isBookCompleted: (state, getters) => (author, book) => {
+      const bookOnShelf = getters.getBookOnShelf(author, book)
+      if (!bookOnShelf) return false
+      return bookOnShelf.completed ?? false
+    },
     getTrackTime: (state, getters) => (author, book) => {
       const bookOnShelf = getters.getBookOnShelf(author, book)
       if (!bookOnShelf) return 0
@@ -72,6 +77,10 @@ export default createStore({
     setChapterIndex (state, index) {
       const book = state.shelf[state.author][state.book]
       book.chapterIndex = index
+    },
+    setBookCompleted (state, completedFlag) {
+      const book = state.shelf[state.author][state.book]
+      book.completed = completedFlag
     },
     setTrackTime (state, time) {
       const book = state.shelf[state.author][state.book]
@@ -99,7 +108,8 @@ export default createStore({
       if (!state.shelf[authorAndBook.author]) state.shelf[authorAndBook.author] = {}
       state.shelf[authorAndBook.author][authorAndBook.book] = {
         chapterIndex: 0,
-        trackTime: 0
+        trackTime: 0,
+        completed: false
       }
     },
     resetSelection (state) {
@@ -132,6 +142,9 @@ export default createStore({
     },
     updateTrackTime ({ commit }, time) {
       commit('setTrackTime', time)
+    },
+    flagBookCompletion ({ commit }, completionFlag) {
+      commit('setBookCompleted', completionFlag)
     },
     setAmplifySound ({ commit }, amplifySound) {
       commit('setAmplifySound', amplifySound)
