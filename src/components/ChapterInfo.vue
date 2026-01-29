@@ -17,7 +17,7 @@ const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, cu
 <template>
   <div>
     <p>
-      {{ currentChapter ? currentChapter.name : '' }}
+      {{ currentChapter }}
     </p>
   </div>
 </template>

@@ -10,7 +10,7 @@ const pageturnSound = new Audio('pageturn.mp3')
 
 export function useAudioControl () {
   const store = useStore()
-  const { getChapterFromBook } = useLibraryLoader()
+  const { getChapterFromBook, getChapterHandle } = useLibraryLoader()
   const { addWarningMessage, addErrorMessage } = useFlashMessages()
   const chapterSrc = ref(null)
   const initTrackTime = ref(0)
@@ -21,7 +21,7 @@ export function useAudioControl () {
   const currentAuthor = computed(() => store.getters.author)
   const currentBook = computed(() => store.getters.book)
   const currentChapterIndex = computed(() => store.getters.getChapterIndex())
-  const currentChapter = computed(() => getChapterFromBook(currentAuthor.value, currentBook.value, currentChapterIndex.value))
+  const currentChapterName = computed(() => getChapterFromBook(currentAuthor.value, currentBook.value, currentChapterIndex.value))
   const autoplayNextChapter = computed(() => store.getters.autoplayNextChapter)
   const playPageturnSound = computed(() => store.getters.pageturnSoundPlay)
   const displayChapterTitle = computed(() => store.getters.displayChapterTitle)
@@ -36,8 +36,9 @@ export function useAudioControl () {
     audioPlayer.value.addEventListener('ended', audioPlayerEnded)
     audioPlayer.value.addEventListener('error', audioPlayerError)
     useAmplifySound().initializeAmplifier(audioPlayer.value)
-    if (currentChapter.value) {
-      await playChapter(currentChapter.value, false)
+    const chapterHandle = await getChapterHandle(currentAuthor.value, currentBook.value, currentChapterIndex.value)
+    if (chapterHandle) {
+      await playChapter(chapterHandle, false)
       const storedTrackTime = store.getters.getTrackTime()
       if (storedTrackTime) {
         initTrackTime.value = storedTrackTime
@@ -68,7 +69,7 @@ export function useAudioControl () {
       chapterSrc.value = URL.createObjectURL(audioFile)
       // reload
       await audioPlayer.value.load()
-      const mediaTitle = displayChapterTitle.value ? currentChapter.value.name : 'Chapter ' + currentChapterIndex.value
+      const mediaTitle = displayChapterTitle.value ? currentChapterName.value : 'Chapter ' + currentChapterIndex.value
       useMediaSession().setup(currentAuthor.value, currentBook.value, mediaTitle)
       if (currentChapterIndex.value === 0 && currentTime.value === 0) {
         await store.dispatch('flagBookCompletion', false)
@@ -87,7 +88,7 @@ export function useAudioControl () {
     if (!audioPlayer.value) return
     initTrackTime.value = 0
     const nextIndex = currentChapterIndex.value + 1
-    const nextChapter = getChapterFromBook(currentAuthor.value, currentBook.value, nextIndex)
+    const nextChapter = await getChapterHandle(currentAuthor.value, currentBook.value, nextIndex)
     if (nextChapter) {
       await stopAudio()
       await store.dispatch('selectChapterIndex', nextIndex)
@@ -101,7 +102,7 @@ export function useAudioControl () {
     if (!audioPlayer.value) return
     initTrackTime.value = 0
     const previousIndex = currentChapterIndex.value - 1
-    const previousChapter = getChapterFromBook(currentAuthor.value, currentBook.value, previousIndex)
+    const previousChapter = await getChapterFromBook(currentAuthor.value, currentBook.value, previousIndex)
     if (previousChapter) {
       await stopAudio()
       await store.dispatch('selectChapterIndex', previousIndex)
@@ -116,7 +117,8 @@ export function useAudioControl () {
     initTrackTime.value = 0
     await stopAudio()
     await store.dispatch('selectChapterIndex', 0)
-    playChapter(currentChapter.value)
+    const chapterHandle = await getChapterHandle(currentAuthor.value, currentBook.value, currentChapterIndex.value)
+    playChapter(chapterHandle)
   }
 
   const trackTimeBack = (backTime) => {
