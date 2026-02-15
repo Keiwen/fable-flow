@@ -85,31 +85,32 @@ export function useAudioControl () {
   }
 
   const nextChapter = async () => {
-    if (!audioPlayer.value) return
-    initTrackTime.value = 0
     const nextIndex = currentChapterIndex.value + 1
-    const nextChapter = await getChapterHandle(currentAuthor.value, currentBook.value, nextIndex)
-    if (nextChapter) {
-      await stopAudio()
-      await store.dispatch('selectChapterIndex', nextIndex)
-      await playChapter(nextChapter)
-    } else {
+    const started = await startChosenChapter(nextIndex)
+    if (!started) {
       addWarningMessage('This is the last chapter')
     }
   }
 
   const previousChapter = async () => {
-    if (!audioPlayer.value) return
-    initTrackTime.value = 0
     const previousIndex = currentChapterIndex.value - 1
-    const previousChapter = await getChapterHandle(currentAuthor.value, currentBook.value, previousIndex)
-    if (previousChapter) {
-      await stopAudio()
-      await store.dispatch('selectChapterIndex', previousIndex)
-      await playChapter(previousChapter)
-    } else {
+    const started = await startChosenChapter(previousIndex)
+    if (!started) {
       addWarningMessage('This is the first chapter')
     }
+  }
+
+  const startChosenChapter = async (index) => {
+    if (!audioPlayer.value) return true
+    initTrackTime.value = 0
+    const chosenChapter = await getChapterHandle(currentAuthor.value, currentBook.value, index)
+    if (chosenChapter) {
+      await stopAudio()
+      await store.dispatch('selectChapterIndex', index)
+      await playChapter(chosenChapter)
+      return true
+    }
+    return false
   }
 
   const startBook = async () => {
