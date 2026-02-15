@@ -18,7 +18,7 @@ let instance = null
 export function useLibraryLoader (store) {
   if (instance) return instance // always return instance if exist
 
-  let isLoading = false
+  const isLoading = ref(false)
   const loadedBooksCount = ref(0)
   if (!store) store = useStore()
   const { addErrorMessage } = useFlashMessages()
@@ -102,7 +102,7 @@ export function useLibraryLoader (store) {
   }
 
   const loadLibrary = async (mainHandle) => {
-    isLoading = true
+    isLoading.value = true
     loadedBooksCount.value = 0
     libraryHandle.value = mainHandle
     tracks.value = {}
@@ -121,7 +121,7 @@ export function useLibraryLoader (store) {
     }
     await store.dispatch('selectLibrary', mainHandle.name)
     await useStorageInstance().setLibraryHandle(mainHandle)
-    isLoading = false
+    isLoading.value = false
   }
 
   const getAuthorsList = () => {
