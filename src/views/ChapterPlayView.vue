@@ -17,5 +17,7 @@ const displayChapterTitle = computed(() => store.getters.displayChapterTitle)
     <book-info></book-info>
     <audio-player></audio-player>
     <chapter-info v-if=" displayChapterTitle"></chapter-info>
+
+    <router-link to="/chapters" class="btn btn-info">Chapters list</router-link>
   </div>
 </template>
