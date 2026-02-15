@@ -102,7 +102,7 @@ export function useAudioControl () {
     if (!audioPlayer.value) return
     initTrackTime.value = 0
     const previousIndex = currentChapterIndex.value - 1
-    const previousChapter = await getChapterFromBook(currentAuthor.value, currentBook.value, previousIndex)
+    const previousChapter = await getChapterHandle(currentAuthor.value, currentBook.value, previousIndex)
     if (previousChapter) {
       await stopAudio()
       await store.dispatch('selectChapterIndex', previousIndex)
